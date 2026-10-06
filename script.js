@@ -53,6 +53,11 @@ function showToast(message) {
 /* ---------- 2. ARMAZENAMENTO ---------- */
 const STORAGE_USERS = "creditto_users";
 const STORAGE_SESSION = "creditto_session";
+// Chaves da versão anterior do site (antes da marca Créditto)
+const LEGACY_USERS = "verde_users";
+const LEGACY_SESSION = "verde_session";
+const SALT = "creditto";
+const LEGACY_SALT = "verde";
 
 /** Lê e grava com try/catch: o localStorage pode estar bloqueado (aba anônima, etc.). */
 const Store = {
@@ -88,12 +93,33 @@ function updateUser(email, changes) {
 }
 
 /**
+ * Traz as contas criadas na versão anterior do site para a chave nova.
+ * As senhas antigas usam outro "sal", guardado em `salt`; no primeiro login
+ * a senha é recalculada com o sal atual.
+ */
+function migrateLegacyAccounts() {
+  const legacy = Store.get(LEGACY_USERS, []);
+  if (!Array.isArray(legacy) || legacy.length === 0) return;
+  const users = getUsers();
+  const known = new Set(users.map((u) => u.email));
+  legacy.forEach((u) => {
+    if (u?.email && !known.has(u.email)) users.push({ ...u, salt: LEGACY_SALT });
+  });
+  if (saveUsers(users)) {
+    const session = Store.get(LEGACY_SESSION, null);
+    if (session && !Store.get(STORAGE_SESSION, null)) Store.set(STORAGE_SESSION, session);
+    Store.remove(LEGACY_USERS);
+    Store.remove(LEGACY_SESSION);
+  }
+}
+
+/**
  * Gera um hash da senha para não guardá-la em texto puro.
  * Usa SHA-256 (Web Crypto) quando disponível; caso contrário, um hash simples.
  * Observação: é um projeto didático — autenticação real exige um servidor.
  */
-async function hashPassword(password) {
-  const salted = `creditto::${password}`;
+async function hashPassword(password, salt = SALT) {
+  const salted = `${salt}::${password}`;
   if (window.crypto?.subtle) {
     const data = new TextEncoder().encode(salted);
     const buffer = await crypto.subtle.digest("SHA-256", data);
@@ -302,10 +328,10 @@ function initAuth() {
     const password = $("#login-password").value;
 
     setLoading(e.target, true);
-    const [passHash] = await Promise.all([hashPassword(password), new Promise((r) => setTimeout(r, 500))]);
+    const user = findUser(email);
+    const [passHash] = await Promise.all([hashPassword(password, user?.salt || SALT), new Promise((r) => setTimeout(r, 500))]);
     setLoading(e.target, false);
 
-    const user = findUser(email);
     if (!user) {
       setFieldError($("#login-email"), "Não encontramos uma conta com este e-mail.");
       showFormAlert("Ainda não tem conta? Clique em “Criar conta” acima.");
@@ -318,6 +344,9 @@ function initAuth() {
       shakeCard();
       return;
     }
+
+    // Conta da versão anterior: atualiza o hash para o sal atual
+    if (user.salt) updateUser(user.email, { passHash: await hashPassword(password), salt: undefined });
 
     e.target.reset();
     login(email, `Olá de novo, ${user.name.split(" ")[0]}!`);
@@ -1424,6 +1453,7 @@ function updateBestScoreLabel() {
 
 /* ---------- 11. PONTO DE ENTRADA ---------- */
 document.addEventListener("DOMContentLoaded", () => {
+  migrateLegacyAccounts();
   initAuth();
 
   // Se já houver sessão salva, entra direto no dashboard
