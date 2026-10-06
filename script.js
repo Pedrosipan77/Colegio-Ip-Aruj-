@@ -11,7 +11,7 @@
    6.  Animações (revelar ao rolar, contadores)
    7.  Gráficos (Chart.js)
    8.  Simulador de dívida
-   9.  Seção educativa (abas, ciclo, barras)
+   9.  Conteúdo educativo (crédito fácil, endividamento, cartão)
    10. Quiz
    11. Ponto de entrada
    ========================================================= */
@@ -366,8 +366,14 @@ function showApp(user) {
     initReveal();
     initCharts();
     initSimulator();
-    initTabs();
+    initCustoReal();
     initCycle();
+    initThermometer();
+    initChecklist();
+    initBill();
+    initMinimum();
+    initCalendar();
+    initMyths();
     initQuiz();
     initCardGlow();
   } else {
@@ -444,7 +450,14 @@ function initReveal() {
   $$(".reveal").forEach((el) => {
     // Na reentrada, os cards voltam a animar
     if (el.classList.contains("stat-card")) el.classList.remove("is-visible");
-    if (!el.classList.contains("is-visible")) revealObserver.observe(el);
+    if (el.classList.contains("is-visible")) return;
+    if (el.getBoundingClientRect().top < window.innerHeight) {
+      el.classList.add("is-visible");
+      $$(".counter", el).forEach(animateCounter);
+      $$(".rate-bar", el).forEach(fillRateBar);
+    } else {
+      revealObserver.observe(el);
+    }
   });
 }
 
@@ -796,57 +809,74 @@ function initSimulator() {
   update();
 }
 
-/* ---------- 9. SEÇÃO EDUCATIVA ---------- */
-
-/** Abas acessíveis: clique e navegação por setas do teclado. */
-function initTabs() {
-  const buttons = $$(".tabs__btn");
-
-  const activate = (btn, focus = false) => {
-    buttons.forEach((b) => {
-      const active = b === btn;
-      b.classList.toggle("is-active", active);
-      b.setAttribute("aria-selected", String(active));
-      b.tabIndex = active ? 0 : -1;
-      const panel = document.getElementById(b.getAttribute("aria-controls"));
-      panel.hidden = !active;
-      panel.classList.toggle("is-active", active);
-    });
-    if (focus) btn.focus();
-
-    // Anima as barras quando a aba de comparativo é aberta
-    if (btn.id === "tabbtn-comparativo") {
-      $$(".rate-bar").forEach((bar) => { bar.dataset.done = ""; $(".rate-bar__fill", bar).style.width = "0"; });
-      requestAnimationFrame(() => setTimeout(() => $$(".rate-bar").forEach(fillRateBar), 80));
-    }
-  };
-
-  buttons.forEach((btn, i) => {
-    btn.addEventListener("click", () => activate(btn));
-    btn.addEventListener("keydown", (e) => {
-      const keys = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
-      if (e.key in keys) {
-        e.preventDefault();
-        activate(buttons[(i + keys[e.key] + buttons.length) % buttons.length], true);
-      } else if (e.key === "Home") {
-        e.preventDefault();
-        activate(buttons[0], true);
-      } else if (e.key === "End") {
-        e.preventDefault();
-        activate(buttons[buttons.length - 1], true);
-      }
-    });
-  });
-}
+/* ---------- 9. CONTEÚDO EDUCATIVO ---------- */
 
 /** Preenche uma barra de taxa até o valor definido em data-value. */
 function fillRateBar(bar) {
-  if (bar.dataset.done || bar.offsetParent === null) return;
+  if (bar.dataset.done) return;
   bar.dataset.done = "1";
   $(".rate-bar__fill", bar).style.width = `${bar.dataset.value}%`;
 }
 
-/** Ciclo do endividamento: etapas interativas com avanço automático. */
+/** Lê um campo numérico com limites seguros. */
+const readNumber = (input, min = 0, max = 1e9) => clamp(parseFloat(input.value) || 0, min, max);
+
+/* ===== 9.1 Crédito fácil: quanto custa de verdade ===== */
+
+/**
+ * Descobre a taxa mensal de um empréstimo a partir do valor recebido,
+ * da parcela e do número de parcelas (Tabela Price), por bissecção.
+ */
+function impliedMonthlyRate(principal, installment, count) {
+  if (principal <= 0 || installment * count <= principal) return 0;
+  const pv = (i) => installment * (1 - Math.pow(1 + i, -count)) / i;
+  let lo = 1e-9;
+  let hi = 5; // 500% ao mês: limite superior seguro
+  for (let k = 0; k < 200; k++) {
+    const mid = (lo + hi) / 2;
+    if (pv(mid) > principal) lo = mid;
+    else hi = mid;
+  }
+  return (lo + hi) / 2;
+}
+
+function initCustoReal() {
+  const amount = $("#cf-amount");
+  const installment = $("#cf-installment");
+  const count = $("#cf-count");
+
+  const update = () => {
+    const p = readNumber(amount, 0, 1e7);
+    const pmt = readNumber(installment, 0, 1e7);
+    const n = Math.round(readNumber(count, 1, 120));
+    const total = pmt * n;
+    const interest = Math.max(0, total - p);
+    const rate = impliedMonthlyRate(p, pmt, n);
+    const yearRate = Math.pow(1 + rate, 12) - 1;
+
+    $("#cf-ad").textContent = `“Pegue ${formatBRL(p, 0)} hoje e pague só ${n}x de ${formatBRL(pmt)}!”`;
+    $("#cf-total").textContent = formatBRL(total);
+    $("#cf-interest").textContent = formatBRL(interest);
+    $("#cf-rate-m").textContent = `${formatNumber(rate * 100, 1)}%`;
+    $("#cf-rate-y").textContent = `${formatNumber(yearRate * 100, yearRate < 10 ? 1 : 0)}%`;
+
+    const share = total > 0 ? (interest / Math.max(total, p)) * 100 : 0;
+    $("#cf-bar-principal").style.width = `${100 - share}%`;
+    $("#cf-bar-interest").style.width = `${share}%`;
+
+    let verdict;
+    if (total <= p) verdict = "Essa oferta não cobra juros. Mesmo assim, confira se não há tarifas ou seguros embutidos no CET.";
+    else if (rate < 0.02) verdict = `Juros de ${formatNumber(rate * 100, 1)}% ao mês estão na faixa de créditos mais baratos, como o consignado. Mesmo assim, você paga ${formatBRL(interest)} a mais.`;
+    else if (rate < 0.06) verdict = `Você devolve ${formatNumber(total / p, 2)}x o que recebeu. É um crédito caro: compare com outras opções antes de aceitar.`;
+    else verdict = `Cuidado: ${formatNumber((interest / p) * 100, 0)}% do valor recebido vai só para juros. Essa taxa é típica do crédito fácil.`;
+    $("#cf-verdict").textContent = verdict;
+  };
+
+  [amount, installment, count].forEach((el) => el.addEventListener("input", update));
+  update();
+}
+
+/* ===== 9.2 Endividamento: ciclo, termômetro e sinais de alerta ===== */
 const CYCLE_STEPS = [
   { title: "Gasto acima da renda", text: "Compras por impulso ou emergências sem reserva fazem os gastos ultrapassarem o salário." },
   { title: "Uso do crédito fácil", text: "Para cobrir a diferença, a pessoa recorre ao cartão, ao cheque especial ou a empréstimos rápidos." },
@@ -857,6 +887,7 @@ const CYCLE_STEPS = [
 
 function initCycle() {
   const nodes = $$(".cycle__node");
+  const items = $$("#cycle-list li");
   const center = $(".cycle__center");
   let current = 0;
   let timer;
@@ -864,6 +895,7 @@ function initCycle() {
   const show = (index) => {
     current = index;
     nodes.forEach((n, i) => n.classList.toggle("is-active", i === index));
+    items.forEach((n, i) => n.classList.toggle("is-active", i === index));
     $("#cycle-num").textContent = `ETAPA ${String(index + 1).padStart(2, "0")}`;
     $("#cycle-title").textContent = CYCLE_STEPS[index].title;
     $("#cycle-text").textContent = CYCLE_STEPS[index].text;
@@ -877,38 +909,302 @@ function initCycle() {
     if (!prefersReducedMotion) timer = setInterval(() => show((current + 1) % nodes.length), 3500);
   };
 
-  nodes.forEach((node, i) => {
-    node.addEventListener("mouseenter", () => { clearInterval(timer); show(i); });
-    node.addEventListener("focus", () => { clearInterval(timer); show(i); });
-    node.addEventListener("click", () => { clearInterval(timer); show(i); });
-    node.addEventListener("mouseleave", startAuto);
+  [...nodes, ...items].forEach((el) => {
+    const i = parseInt(el.dataset.step, 10);
+    const pick = () => { clearInterval(timer); show(i); };
+    el.addEventListener("mouseenter", pick);
+    el.addEventListener("focus", pick);
+    el.addEventListener("click", pick);
+    el.addEventListener("mouseleave", startAuto);
   });
 
   show(0);
   startAuto();
 }
 
+/** Converte uma porcentagem (0–100) em ponto do arco do termômetro. */
+function gaugePoint(pct, radius) {
+  const angle = Math.PI - (pct / 100) * Math.PI;
+  return { x: 110 + radius * Math.cos(angle), y: 110 - radius * Math.sin(angle) };
+}
+
+function initThermometer() {
+  const income = $("#th-income");
+  const debts = $("#th-debts");
+  const fill = $("#gauge-fill");
+  const length = fill.getTotalLength();
+  fill.style.strokeDasharray = `${length}`;
+
+  // Marcas de 0%, 30%, 50% e 100% no arco
+  const ticks = $("#gauge-ticks");
+  ticks.innerHTML = [0, 30, 50, 100]
+    .map((t) => {
+      const a = gaugePoint(t, 80);
+      const b = gaugePoint(t, 100);
+      const label = gaugePoint(t, 112);
+      return `<line class="gauge__tick-line" x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" />` +
+        `<text class="gauge__tick" x="${label.x}" y="${label.y + 3}" text-anchor="middle">${t}%</text>`;
+    })
+    .join("");
+
+  const update = () => {
+    const r = readNumber(income, 0, 1e9);
+    const d = readNumber(debts, 0, 1e9);
+    const pct = r > 0 ? (d / r) * 100 : d > 0 ? 100 : 0;
+    const shown = clamp(pct, 0, 100);
+
+    let zone;
+    if (pct <= 30) zone = { cls: "good", color: "var(--green-500)", label: "Saudável", msg: `Ótimo! Sobram ${formatBRL(Math.max(0, r - d))} para gastos essenciais, lazer e reserva. Mantenha as parcelas abaixo de 30% da renda.` };
+    else if (pct <= 50) zone = { cls: "warning", color: "var(--warn)", label: "Atenção", msg: `Atenção: ${formatNumber(pct, 0)}% da renda já está comprometida. Evite novas parcelas e tente quitar primeiro as dívidas com juros mais altos.` };
+    else zone = { cls: "critical", color: "var(--danger)", label: "Risco de superendividamento", msg: `Mais da metade da renda vai para dívidas. Sobra pouco para viver. Procure renegociar: a Lei do Superendividamento garante um plano que preserva o mínimo para viver.` };
+
+    fill.style.strokeDashoffset = `${length * (1 - shown / 100)}`;
+    fill.style.stroke = zone.color;
+    $("#th-pct").textContent = `${formatNumber(pct, 0)}%`;
+    const status = $("#th-status");
+    status.className = `status status--${zone.cls}`;
+    status.textContent = zone.label;
+    $("#th-message").textContent = zone.msg;
+  };
+
+  [income, debts].forEach((el) => el.addEventListener("input", update));
+  update();
+}
+
+function initChecklist() {
+  const boxes = $$("#checklist input");
+  const update = () => {
+    const n = boxes.filter((b) => b.checked).length;
+    let level;
+    if (n === 0) level = { cls: "good", label: "Tudo tranquilo", text: "Nenhum sinal marcado. Continue acompanhando seus gastos.", color: "var(--green-500)" };
+    else if (n <= 2) level = { cls: "good", label: "Fique de olho", text: `${n} sinal${n > 1 ? "is" : ""} de alerta. Ainda dá para ajustar com pequenas mudanças no orçamento.`, color: "var(--green-500)" };
+    else if (n <= 4) level = { cls: "warning", label: "Atenção", text: `${n} sinais de alerta. É hora de listar as dívidas e cortar o uso do crédito caro.`, color: "var(--warn)" };
+    else level = { cls: "critical", label: "Alerta", text: `${n} sinais de alerta. Siga o passo a passo abaixo e procure renegociar o quanto antes.`, color: "var(--danger)" };
+
+    const bar = $("#alert-bar");
+    bar.style.width = `${(n / boxes.length) * 100}%`;
+    bar.style.background = level.color;
+    const status = $("#alert-status");
+    status.className = `status status--${level.cls}`;
+    status.textContent = level.label;
+    $("#alert-text").textContent = level.text;
+  };
+  boxes.forEach((b) => b.addEventListener("change", update));
+  update();
+}
+
+/* ===== 9.3 Cartão: fatura, mínimo x total, melhor dia e mitos ===== */
+const BILL_SPOTS = [
+  { title: "Total da fatura", text: "É a soma de todas as compras do mês, incluindo as parcelas que vencem agora.", tip: "Pague sempre este valor. Assim você não paga nenhum centavo de juros." },
+  { title: "Pagamento mínimo", text: "O menor valor que o banco aceita para você não ficar inadimplente. Aqui, 15% do total.", tip: "Pagar só o mínimo faz os outros R$ 1.566,46 irem para o rotativo, com juros de 13,9% ao mês." },
+  { title: "Vencimento", text: "Data limite para pagar. Depois dela, além dos juros, há multa de 2% e juros de mora de 1% ao mês.", tip: "Coloque a fatura no débito automático ou crie um lembrete alguns dias antes." },
+  { title: "Fechamento e melhor dia de compra", text: "Compras feitas a partir do fechamento só entram na fatura do mês seguinte.", tip: "Comprar no dia do fechamento dá o maior prazo para pagar, cerca de 37 dias." },
+  { title: "Parcelas das próximas faturas", text: "Compras parceladas já comprometem as faturas dos próximos meses, mesmo que você não compre mais nada.", tip: "Some sempre as parcelas futuras antes de parcelar algo novo." },
+  { title: "Limite disponível", text: "O parcelado ocupa o limite pelo valor total da compra. Por isso, sobram só R$ 370,30 de R$ 4.000.", tip: "Limite é dinheiro do banco, não seu. Use no máximo 30% dele." },
+  { title: "Juros do rotativo e CET", text: "A fatura é obrigada a informar a taxa do rotativo e o Custo Efetivo Total (CET), que inclui juros, tarifas e impostos.", tip: "13,9% ao mês viram mais de 400% ao ano. Compare esse número antes de usar o crédito." },
+];
+
+function initBill() {
+  const spots = $$(".hotspot");
+  const panel = $("#bill-explain");
+  let current = 0;
+
+  const show = (i) => {
+    current = (i + BILL_SPOTS.length) % BILL_SPOTS.length;
+    const s = BILL_SPOTS[current];
+    $("#spot-num").textContent = current + 1;
+    $("#spot-title").textContent = s.title;
+    $("#spot-text").textContent = s.text;
+    $("#spot-tip").textContent = s.tip;
+    spots.forEach((b) => b.classList.toggle("is-active", parseInt(b.dataset.spot, 10) === current));
+    panel.classList.remove("swap");
+    void panel.offsetWidth;
+    panel.classList.add("swap");
+  };
+
+  spots.forEach((b) => b.addEventListener("click", () => show(parseInt(b.dataset.spot, 10))));
+  $("#spot-prev").addEventListener("click", () => show(current - 1));
+  $("#spot-next").addEventListener("click", () => show(current + 1));
+  show(0);
+}
+
+/**
+ * Simula a fatura pagando só o mínimo todo mês, sem novas compras.
+ * Com o teto legal, o total de juros não passa de 100% do valor original.
+ */
+function simulateMinimum(bill, rate, minPct, cap) {
+  const MIN_FLOOR = 50; // valor mínimo em reais, como fazem os bancos
+  const MAX_MONTHS = 240;
+  let balance = bill;
+  let paid = 0;
+  let interestTotal = 0;
+  const series = { balance: [bill], paid: [0] };
+  let months = 0;
+
+  while (balance > 0.005 && months < MAX_MONTHS) {
+    months++;
+    const payment = Math.min(balance, Math.max(balance * minPct, MIN_FLOOR));
+    paid += payment;
+    balance -= payment;
+    if (balance > 0.005) {
+      let interest = balance * rate;
+      if (cap) interest = Math.min(interest, Math.max(0, bill - interestTotal));
+      balance += interest;
+      interestTotal += interest;
+    }
+    series.balance.push(Math.max(0, balance));
+    series.paid.push(paid);
+  }
+  return { months, paid, interestTotal, unfinished: balance > 0.005, series };
+}
+
+function initMinimum() {
+  const bill = $("#mt-bill");
+  const rate = $("#mt-rate");
+  const min = $("#mt-min");
+  const cap = $("#mt-cap");
+
+  if (typeof Chart !== "undefined") {
+    charts.min = new Chart($("#minChart"), {
+      type: "line",
+      data: {
+        labels: [],
+        datasets: [
+          { label: "Total já pago", data: [], borderColor: COLORS.green, borderWidth: 2.5, pointRadius: 0, pointHoverRadius: 5, tension: 0.25, fill: false },
+          { label: "Saldo devedor", data: [], borderColor: "#f87171", borderWidth: 2, pointRadius: 0, pointHoverRadius: 5, tension: 0.25, fill: false },
+          { label: "Valor da fatura", data: [], borderColor: COLORS.neutral, borderWidth: 2, borderDash: [6, 6], pointRadius: 0, pointHoverRadius: 0, fill: false },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: prefersReducedMotion ? 0 : 450 },
+        interaction: { mode: "index", intersect: false },
+        plugins: {
+          legend: { position: "top", align: "end" },
+          tooltip: {
+            filter: (item) => item.datasetIndex !== 2,
+            callbacks: {
+              title: (items) => (items[0].dataIndex === 0 ? "Hoje" : `Mês ${items[0].dataIndex}`),
+              label: (c) => ` ${c.dataset.label}: ${formatBRL(c.parsed.y)}`,
+            },
+          },
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { maxRotation: 0, autoSkipPadding: 18 }, title: { display: true, text: "Meses", color: COLORS.muted } },
+          y: { beginAtZero: true, border: { display: false }, ticks: { callback: brlTick, maxTicksLimit: 6 } },
+        },
+      },
+    });
+  }
+
+  const update = () => {
+    const b = readNumber(bill, 0, 1e7);
+    const r = readNumber(rate, 0, 100) / 100;
+    const m = readNumber(min, 1, 100) / 100;
+    const sim = simulateMinimum(b, r, m, cap.checked);
+
+    $("#mt-total-paid").textContent = formatBRL(b);
+    $("#mt-min-paid").textContent = sim.unfinished ? `+ de ${formatBRL(sim.paid, 0)}` : formatBRL(sim.paid);
+    const years = sim.months / 12;
+    const timeText = sim.unfinished ? "mais de 20 anos" : sim.months < 12 ? `${sim.months} meses` : `${sim.months} meses (${formatNumber(years, 1)} anos)`;
+    $("#mt-min-info").textContent = `em ${timeText}, com ${formatBRL(sim.interestTotal)} de juros`;
+
+    if (charts.min) {
+      charts.min.data.labels = sim.series.paid.map((_, i) => (i === 0 ? "Hoje" : `${i}`));
+      charts.min.data.datasets[0].data = sim.series.paid;
+      charts.min.data.datasets[1].data = sim.series.balance;
+      charts.min.data.datasets[2].data = sim.series.paid.map(() => b);
+      charts.min.update();
+    }
+
+    const extra = sim.paid - b;
+    $("#mt-insight").innerHTML = b > 0
+      ? `Pagando só o mínimo, você leva <strong>${timeText}</strong> para quitar e paga <strong>${formatBRL(extra)} a mais</strong> do que se pagasse a fatura inteira hoje${cap.checked ? ", mesmo com o teto da lei" : ""}.`
+      : "Informe o valor da fatura para simular.";
+  };
+
+  [bill, rate, min].forEach((el) => el.addEventListener("input", update));
+  cap.addEventListener("change", update);
+  update();
+}
+
+function initCalendar() {
+  const close = $("#cal-close");
+  const buy = $("#cal-buy");
+  const DUE_OFFSET = 7; // dias entre fechamento e vencimento
+  const DAY = 86400000;
+
+  close.innerHTML = Array.from({ length: 28 }, (_, i) => `<option value="${i + 1}">Dia ${i + 1}</option>`).join("");
+  close.value = "8";
+
+  const fmt = (d) => d.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
+
+  const update = () => {
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = today.getMonth();
+    const closeDay = parseInt(close.value, 10);
+    const buyDay = parseInt(buy.value, 10);
+
+    const purchase = new Date(y, m, buyDay);
+    // Compras a partir do dia do fechamento entram na fatura seguinte
+    let closing = new Date(y, m, closeDay);
+    if (purchase >= closing) closing = new Date(y, m + 1, closeDay);
+    const due = new Date(closing.getTime() + DUE_OFFSET * DAY);
+    const days = Math.round((due - purchase) / DAY);
+
+    // Linha do tempo: escala de 0 a 40 dias a partir da compra
+    const SPAN = 40;
+    const pos = (d) => `${clamp(((d - purchase) / DAY / SPAN) * 100, 0, 100)}%`;
+    $("#cal-buy-label").textContent = buyDay;
+    $("#tl-buy").style.left = "0%";
+    $("#tl-close").style.left = pos(closing);
+    $("#tl-due").style.left = pos(due);
+    $("#tl-fill").style.width = pos(due);
+    $("#tl-buy strong").textContent = fmt(purchase);
+    $("#tl-close strong").textContent = fmt(closing);
+    $("#tl-due strong").textContent = fmt(due);
+    $("#cal-days").textContent = days;
+
+    let text;
+    if (days >= 30) text = `Ótimo momento! A compra entra só na fatura que fecha em ${fmt(closing)}, e você tem ${days} dias para pagar sem juros.`;
+    else if (days >= 15) text = `Prazo razoável. Se puder esperar até o dia ${closeDay}, você ganha ${DUE_OFFSET + 30 - days} dias a mais.`;
+    else text = `Pior momento para comprar: faltam poucos dias para o fechamento, e a conta chega em ${days} dias. Espere até o dia ${closeDay}, o melhor dia de compra.`;
+    $("#cal-text").textContent = text;
+  };
+
+  close.addEventListener("change", update);
+  buy.addEventListener("input", () => {
+    buy.style.setProperty("--pct", `${((buy.value - buy.min) / (buy.max - buy.min)) * 100}%`);
+    update();
+  });
+  buy.style.setProperty("--pct", `${((buy.value - buy.min) / (buy.max - buy.min)) * 100}%`);
+  update();
+}
+
+function initMyths() {
+  $$(".myth").forEach((card) => {
+    card.setAttribute("aria-pressed", "false");
+    card.addEventListener("click", () => {
+      const flipped = card.classList.toggle("is-flipped");
+      card.setAttribute("aria-pressed", String(flipped));
+    });
+  });
+}
+
 /* ---------- 10. QUIZ ---------- */
-const QUIZ = [
+/** Banco de perguntas: a cada rodada, 5 são sorteadas. */
+const QUIZ_BANK = [
   {
     q: "Se você paga apenas o valor mínimo da fatura do cartão, o que acontece com o restante?",
-    options: [
-      "É perdoado pelo banco",
-      "Vai para o crédito rotativo, com juros altíssimos",
-      "É dividido sem juros na próxima fatura",
-      "Fica congelado até você ter dinheiro",
-    ],
+    options: ["É perdoado pelo banco", "Vai para o crédito rotativo, com juros altíssimos", "É dividido sem juros na próxima fatura", "Fica congelado até você ter dinheiro"],
     answer: 1,
     explain: "O saldo não pago entra no rotativo, uma das linhas de crédito mais caras do Brasil. Sempre que possível, pague o valor total.",
   },
   {
     q: "O limite do cartão de crédito representa:",
-    options: [
-      "Um dinheiro extra que faz parte da sua renda",
-      "O valor que você ganhou do banco",
-      "Um empréstimo que o banco oferece e que precisa ser pago",
-      "O quanto você deve gastar por mês",
-    ],
+    options: ["Um dinheiro extra que faz parte da sua renda", "O valor que você ganhou do banco", "Um empréstimo que o banco oferece e que precisa ser pago", "O quanto você deve gastar por mês"],
     answer: 2,
     explain: "Limite não é renda! É dinheiro emprestado. O ideal é usar no máximo cerca de 30% do limite e nunca mais do que você ganha.",
   },
@@ -926,16 +1222,60 @@ const QUIZ = [
   },
   {
     q: "Você percebeu que tem várias dívidas. Qual é a melhor primeira atitude?",
-    options: [
-      "Pegar um novo empréstimo rápido para pagar tudo",
-      "Listar todas as dívidas, cortar gastos e negociar com os credores",
-      "Ignorar as cobranças até elas sumirem",
-      "Usar outro cartão para pagar a fatura do primeiro",
-    ],
+    options: ["Pegar um novo empréstimo rápido para pagar tudo", "Listar todas as dívidas, cortar gastos e negociar", "Ignorar as cobranças até elas sumirem", "Usar outro cartão para pagar a fatura do primeiro"],
     answer: 1,
     explain: "Conhecer o tamanho do problema é o primeiro passo. Depois, priorize as dívidas com juros mais altos e negocie descontos.",
   },
+  {
+    q: "Um app oferece R$ 1.000 na hora, para pagar em 12x de R$ 150. Quanto você pagaria de juros?",
+    options: ["R$ 150", "R$ 500", "R$ 800", "Nada, porque é parcelado"],
+    answer: 2,
+    explain: "12 × R$ 150 = R$ 1.800. Você recebe R$ 1.000 e devolve R$ 1.800: são R$ 800 só de juros, uma taxa de cerca de 10% ao mês.",
+  },
+  {
+    q: "Uma empresa pede um “depósito de taxa” para liberar seu empréstimo. Isso indica:",
+    options: ["Que o empréstimo foi aprovado", "Uma prática normal dos bancos", "Um provável golpe", "Que os juros serão menores"],
+    answer: 2,
+    explain: "Instituições sérias nunca cobram valores antecipados para liberar crédito. Esse é um dos golpes mais comuns.",
+  },
+  {
+    q: "Qual é o melhor dia para fazer uma compra no cartão?",
+    options: ["O dia do vencimento", "O dia do fechamento da fatura", "Um dia antes do fechamento", "Qualquer dia, tanto faz"],
+    answer: 1,
+    explain: "Compras feitas no dia do fechamento só entram na fatura seguinte. Assim você ganha cerca de 37 dias para pagar sem juros.",
+  },
+  {
+    q: "Segundo educadores financeiros, as parcelas de dívidas não deveriam passar de quanto da renda?",
+    options: ["Cerca de 10%", "Cerca de 30%", "Cerca de 60%", "Não existe limite"],
+    answer: 1,
+    explain: "Até 30% da renda é a referência para manter o orçamento saudável. Acima de 50%, há risco de superendividamento.",
+  },
+  {
+    q: "O que a Lei 14.690/2023 mudou no rotativo do cartão?",
+    options: ["Proibiu o uso do cartão de crédito", "Limitou juros e encargos a 100% do valor da dívida", "Acabou com o pagamento mínimo", "Zerou os juros do cartão"],
+    answer: 1,
+    explain: "Desde 2024, os juros e encargos do rotativo e do parcelamento da fatura não podem passar do valor original da dívida. Ainda assim, é muito caro.",
+  },
 ];
+const QUIZ_SIZE = 5;
+
+/** Embaralha uma cópia de um array (Fisher–Yates). */
+function shuffle(list) {
+  const a = [...list];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/** Sorteia as perguntas da rodada e embaralha as alternativas de cada uma. */
+function pickQuestions() {
+  return shuffle(QUIZ_BANK).slice(0, QUIZ_SIZE).map((item) => {
+    const order = shuffle(item.options.map((_, i) => i));
+    return { ...item, options: order.map((i) => item.options[i]), answer: order.indexOf(item.answer) };
+  });
+}
 
 /** Feedback final de acordo com a pontuação. */
 const QUIZ_FEEDBACK = [
@@ -952,6 +1292,7 @@ function initQuiz() {
   const nextBtn = $("#quiz-next");
   const LETTERS = ["A", "B", "C", "D"];
 
+  let questions = [];
   let index = 0;
   let score = 0;
   let answers = [];
@@ -959,19 +1300,19 @@ function initQuiz() {
   const showScreen = (name) => Object.entries(screens).forEach(([k, el]) => (el.hidden = k !== name));
 
   const setProgress = (done) => {
-    const pct = (done / QUIZ.length) * 100;
+    const pct = (done / questions.length) * 100;
     $("#quiz-progress-fill").style.width = `${pct}%`;
     $("#quiz-progress").setAttribute("aria-valuenow", String(Math.round(pct)));
   };
 
   const renderQuestion = () => {
-    const item = QUIZ[index];
-    $("#quiz-count").textContent = `Pergunta ${index + 1} de ${QUIZ.length}`;
+    const item = questions[index];
+    $("#quiz-count").textContent = `Pergunta ${index + 1} de ${questions.length}`;
     $("#quiz-score").textContent = score;
     $("#quiz-q").textContent = item.q;
     feedbackEl.hidden = true;
     nextBtn.disabled = true;
-    nextBtn.textContent = index === QUIZ.length - 1 ? "Ver resultado" : "Próxima";
+    nextBtn.textContent = index === questions.length - 1 ? "Ver resultado" : "Próxima";
     setProgress(index);
 
     optionsEl.innerHTML = "";
@@ -992,7 +1333,7 @@ function initQuiz() {
   };
 
   const choose = (i) => {
-    const item = QUIZ[index];
+    const item = questions[index];
     const correct = i === item.answer;
     const buttons = $$(".option", optionsEl);
 
@@ -1046,6 +1387,7 @@ function initQuiz() {
   };
 
   const start = () => {
+    questions = pickQuestions();
     index = 0;
     score = 0;
     answers = [];
@@ -1057,7 +1399,7 @@ function initQuiz() {
   $("#quiz-restart").addEventListener("click", start);
   nextBtn.addEventListener("click", () => {
     index++;
-    if (index < QUIZ.length) renderQuestion();
+    if (index < questions.length) renderQuestion();
     else showResult();
   });
 

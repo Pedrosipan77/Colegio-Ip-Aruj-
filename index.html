@@ -170,8 +170,9 @@
 
         <nav class="nav__links" id="nav-links" aria-label="Seções">
           <a href="#dashboard" class="nav__link is-active">Painel</a>
-          <a href="#simulador" class="nav__link">Simulador</a>
-          <a href="#educacao" class="nav__link">Aprenda</a>
+          <a href="#credito-facil" class="nav__link">Crédito fácil</a>
+          <a href="#endividamento" class="nav__link">Endividamento</a>
+          <a href="#cartao" class="nav__link">Cartão</a>
           <a href="#quiz" class="nav__link">Quiz</a>
         </nav>
 
@@ -200,7 +201,7 @@
           </div>
           <div class="hero__actions">
             <a href="#simulador" class="btn btn--primary">Simular uma dívida</a>
-            <a href="#quiz" class="btn btn--outline">Fazer o quiz</a>
+            <a href="#credito-facil" class="btn btn--outline">Começar a aprender</a>
           </div>
         </div>
 
@@ -284,16 +285,229 @@
     </section>
 
     <!-- =================================================
-         SIMULADOR DE DÍVIDA (efeito bola de neve)
+         PARTE 1 · CRÉDITO FÁCIL
          ================================================= -->
-    <section id="simulador" class="section">
+    <section id="credito-facil" class="section">
       <div class="container">
         <div class="section__head reveal">
-          <span class="eyebrow">Simulador</span>
-          <h2>O efeito <span class="text-gradient">bola de neve</span></h2>
-          <p>Ajuste o valor da dívida e a taxa mensal. O gráfico mostra como os juros compostos fazem a dívida crescer quando nada é pago.</p>
+          <span class="eyebrow">Parte 1 · Crédito fácil</span>
+          <h2>Dinheiro rápido, <span class="text-gradient">conta salgada</span></h2>
+          <p>“Aprovado na hora”, “sem consulta”, “só 12x que cabem no bolso”. Veja o que existe por trás dessas promessas.</p>
         </div>
 
+        <!-- O que é + armadilhas -->
+        <div class="panel panel--pad-lg reveal">
+          <div class="split">
+            <div>
+              <h3 class="block-title">O que é crédito fácil?</h3>
+              <p class="lead">É o dinheiro oferecido com <strong>pouca burocracia</strong> e <strong>aprovação imediata</strong>: “dinheiro na conta em 5 minutos”, “sem consulta ao SPC”, “limite pré-aprovado”.</p>
+              <p class="body-text">Parece uma ajuda, mas a facilidade tem um preço. Quanto mais fácil o acesso, maior o risco para quem empresta, e esse risco é cobrado de você em forma de <strong>juros altíssimos</strong>. O crédito fácil também tira de você o tempo de pensar se a compra é mesmo necessária.</p>
+              <div class="quote">
+                <span class="quote__label">Regra de ouro</span>
+                <p>Antes de aceitar qualquer crédito, pergunte: <strong>quanto vou pagar no total?</strong> Se a resposta não estiver clara, não assine.</p>
+              </div>
+            </div>
+            <div class="trap-list">
+              <h4>Por que é uma armadilha</h4>
+              <div class="trap">
+                <span class="trap__icon">%</span>
+                <div><strong>Juros escondidos</strong><p>A parcela “cabe no bolso”, mas o custo total (CET) pode chegar ao dobro do valor recebido.</p></div>
+              </div>
+              <div class="trap">
+                <span class="trap__icon">⚡</span>
+                <div><strong>Decisão por impulso</strong><p>A rapidez elimina o tempo de comparar ofertas e de pensar se a compra é necessária.</p></div>
+              </div>
+              <div class="trap">
+                <span class="trap__icon">∞</span>
+                <div><strong>Dívida que alimenta dívida</strong><p>Muita gente pega um novo empréstimo para pagar o anterior e entra no ciclo do endividamento.</p></div>
+              </div>
+              <div class="trap">
+                <span class="trap__icon">!</span>
+                <div><strong>Golpes</strong><p>Desconfie de quem pede “taxa antecipada” para liberar o dinheiro. Instituição séria não cobra nada antes.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tipos de crédito fácil -->
+        <div class="subhead reveal">
+          <h3>As faces do crédito fácil</h3>
+          <p>Taxas médias aproximadas. O nível de risco considera juros e facilidade de perder o controle.</p>
+        </div>
+        <div class="credit-types">
+          <article class="ctype reveal">
+            <header><h4>Rotativo do cartão</h4><span class="risk risk--extreme">Risco extremo</span></header>
+            <p>Entra automaticamente quando você paga menos que o total da fatura.</p>
+            <footer><span class="ctype__rate">~14%</span><span class="muted">ao mês</span></footer>
+          </article>
+          <article class="ctype reveal">
+            <header><h4>Cheque especial</h4><span class="risk risk--high">Risco alto</span></header>
+            <p>Limite extra na conta que é usado sem você perceber quando o saldo fica negativo.</p>
+            <footer><span class="ctype__rate">~7%</span><span class="muted">ao mês (teto de 8%)</span></footer>
+          </article>
+          <article class="ctype reveal">
+            <header><h4>Empréstimo por app</h4><span class="risk risk--high">Risco alto</span></header>
+            <p>“Dinheiro na conta em minutos”. As taxas variam muito e podem ser altíssimas.</p>
+            <footer><span class="ctype__rate">4–20%</span><span class="muted">ao mês</span></footer>
+          </article>
+          <article class="ctype reveal">
+            <header><h4>Cartão de loja e crediário</h4><span class="risk risk--high">Risco alto</span></header>
+            <p>Oferecido no caixa com “desconto na primeira compra”. Fácil de abrir, difícil de controlar.</p>
+            <footer><span class="ctype__rate">6–10%</span><span class="muted">ao mês</span></footer>
+          </article>
+          <article class="ctype reveal">
+            <header><h4>Parcelado com juros e Pix parcelado</h4><span class="risk risk--medium">Risco médio</span></header>
+            <p>Divide uma compra ou um Pix em várias vezes no cartão, com juros embutidos em cada parcela.</p>
+            <footer><span class="ctype__rate">3–8%</span><span class="muted">ao mês</span></footer>
+          </article>
+          <article class="ctype reveal">
+            <header><h4>Consignado</h4><span class="risk risk--low">Risco menor</span></header>
+            <p>Descontado direto do salário ou da aposentadoria. Juros baixos, mas compromete a renda por anos.</p>
+            <footer><span class="ctype__rate">~1,8%</span><span class="muted">ao mês</span></footer>
+          </article>
+        </div>
+
+        <!-- Calculadora: custo real de uma oferta -->
+        <div class="panel panel--pad-lg cost reveal" id="custo-real">
+          <header class="panel__header">
+            <div>
+              <h3>Quanto custa de verdade?</h3>
+              <p>Coloque os números de uma oferta: o valor que você recebe, o valor da parcela e quantas parcelas são.</p>
+            </div>
+          </header>
+
+          <div class="cost__grid">
+            <div class="cost__inputs">
+              <div class="input-row">
+                <label for="cf-amount">Valor que você recebe</label>
+                <div class="control__input"><span>R$</span><input id="cf-amount" type="number" min="50" max="100000" step="50" value="1000" inputmode="decimal" /></div>
+              </div>
+              <div class="input-row">
+                <label for="cf-installment">Valor de cada parcela</label>
+                <div class="control__input"><span>R$</span><input id="cf-installment" type="number" min="1" max="100000" step="1" value="150" inputmode="decimal" /></div>
+              </div>
+              <div class="input-row">
+                <label for="cf-count">Número de parcelas</label>
+                <div class="control__input"><input id="cf-count" type="number" min="1" max="120" step="1" value="12" inputmode="numeric" /><span>x</span></div>
+              </div>
+              <div class="ad">
+                <span class="ad__tag">O anúncio diz</span>
+                <p id="cf-ad">“Pegue R$ 1.000 hoje e pague só 12x de R$ 150!”</p>
+              </div>
+            </div>
+
+            <div class="cost__result">
+              <span class="ad__tag ad__tag--truth">A realidade</span>
+              <div class="kpis">
+                <div class="kpi"><span>Total pago</span><strong id="cf-total">—</strong></div>
+                <div class="kpi kpi--danger"><span>Só de juros</span><strong id="cf-interest">—</strong></div>
+                <div class="kpi"><span>Taxa ao mês</span><strong id="cf-rate-m">—</strong></div>
+                <div class="kpi"><span>Taxa ao ano</span><strong id="cf-rate-y">—</strong></div>
+              </div>
+              <div class="split-bar" aria-hidden="true">
+                <span class="split-bar__part split-bar__part--principal" id="cf-bar-principal"></span>
+                <span class="split-bar__part split-bar__part--interest" id="cf-bar-interest"></span>
+              </div>
+              <div class="legend">
+                <span><i class="dot dot--neutral"></i>Valor recebido</span>
+                <span><i class="dot dot--danger"></i>Juros</span>
+              </div>
+              <p class="cost__verdict" id="cf-verdict">—</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comparativo -->
+        <div class="panel panel--pad-lg reveal">
+          <h3 class="block-title">Crédito saudável x crédito perigoso</h3>
+          <p class="lead">Nem toda dívida é ruim. A diferença está no motivo, no custo e no planejamento.</p>
+          <div class="compare">
+            <div class="compare__col compare__col--good">
+              <header><span class="compare__badge">✓</span><h4>Crédito saudável</h4></header>
+              <ul>
+                <li>Planejado e com objetivo claro (estudo, casa, ferramenta de trabalho)</li>
+                <li>Parcela de até 30% da renda mensal</li>
+                <li>Juros baixos e CET comparado entre bancos</li>
+                <li>Ajuda a gerar valor ou renda no futuro</li>
+                <li>Você sabe exatamente quando termina</li>
+              </ul>
+            </div>
+            <div class="compare__vs" aria-hidden="true">VS</div>
+            <div class="compare__col compare__col--bad">
+              <header><span class="compare__badge">✕</span><h4>Crédito perigoso</h4></header>
+              <ul>
+                <li>Usado por impulso ou para cobrir outra dívida</li>
+                <li>Parcelas que somam mais da metade da renda</li>
+                <li>Rotativo, cheque especial e empréstimos “sem consulta”</li>
+                <li>Financia um consumo que acaba antes da dívida</li>
+                <li>Valor final desconhecido ou que só aumenta</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="rate-bars">
+            <h4>Quanto custa ao ano? <span class="muted">(taxas médias aproximadas)</span></h4>
+            <div class="rate-bar" data-value="17"><span class="rate-bar__label">Financ. imóvel</span><div class="rate-bar__track"><span class="rate-bar__fill rate-bar__fill--good"></span></div><span class="rate-bar__value">~12%</span></div>
+            <div class="rate-bar" data-value="24"><span class="rate-bar__label">Consignado</span><div class="rate-bar__track"><span class="rate-bar__fill rate-bar__fill--good"></span></div><span class="rate-bar__value">~25%</span></div>
+            <div class="rate-bar" data-value="46"><span class="rate-bar__label">Crédito pessoal</span><div class="rate-bar__track"><span class="rate-bar__fill rate-bar__fill--warn"></span></div><span class="rate-bar__value">~90%</span></div>
+            <div class="rate-bar" data-value="55"><span class="rate-bar__label">Cheque especial</span><div class="rate-bar__track"><span class="rate-bar__fill rate-bar__fill--bad"></span></div><span class="rate-bar__value">~130%</span></div>
+            <div class="rate-bar" data-value="100"><span class="rate-bar__label">Rotativo</span><div class="rate-bar__track"><span class="rate-bar__fill rate-bar__fill--bad"></span></div><span class="rate-bar__value">~430%</span></div>
+            <p class="muted small">Barras em escala de raiz quadrada para caber na tela. A diferença real é ainda maior.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================
+         PARTE 2 · ENDIVIDAMENTO
+         ================================================= -->
+    <section id="endividamento" class="section">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="eyebrow">Parte 2 · Endividamento</span>
+          <h2>Como a dívida vira <span class="text-gradient">bola de neve</span></h2>
+          <p>Ninguém planeja ficar endividado. A dívida cresce aos poucos, em um ciclo que se repete. Entender esse ciclo é o primeiro passo para sair dele.</p>
+        </div>
+
+        <!-- Ciclo do endividamento -->
+        <div class="panel panel--pad-lg reveal">
+          <div class="cycle-layout">
+            <div>
+              <h3 class="block-title">O ciclo do endividamento</h3>
+              <p class="body-text">São cinco etapas que se alimentam. Passe o mouse ou toque em cada uma para ver o que acontece.</p>
+              <ol class="cycle-list" id="cycle-list">
+                <li data-step="0" class="is-active"><span>1</span>Gasto acima da renda</li>
+                <li data-step="1"><span>2</span>Uso do crédito fácil</li>
+                <li data-step="2"><span>3</span>Pagamento do mínimo</li>
+                <li data-step="3"><span>4</span>Juros sobre juros</li>
+                <li data-step="4"><span>5</span>Nova dívida para pagar a antiga</li>
+              </ol>
+            </div>
+
+            <div class="cycle">
+              <svg class="cycle__ring" viewBox="0 0 400 400" aria-hidden="true">
+                <circle cx="200" cy="200" r="150" class="cycle__track" />
+                <circle cx="200" cy="200" r="150" class="cycle__dash" />
+              </svg>
+              <div class="cycle__center">
+                <span class="cycle__step-num" id="cycle-num">ETAPA 01</span>
+                <strong id="cycle-title">Gasto acima da renda</strong>
+                <p id="cycle-text">Compras por impulso ou emergências sem reserva fazem os gastos ultrapassarem o salário.</p>
+              </div>
+              <button class="cycle__node is-active" style="--i:0" data-step="0" type="button"><span>1</span>Gasto</button>
+              <button class="cycle__node" style="--i:1" data-step="1" type="button"><span>2</span>Crédito</button>
+              <button class="cycle__node" style="--i:2" data-step="2" type="button"><span>3</span>Mínimo</button>
+              <button class="cycle__node" style="--i:3" data-step="3" type="button"><span>4</span>Juros</button>
+              <button class="cycle__node" style="--i:4" data-step="4" type="button"><span>5</span>Nova dívida</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulador bola de neve -->
+        <div class="subhead reveal" id="simulador">
+          <h3>Simulador: o efeito bola de neve</h3>
+          <p>Ajuste o valor e os juros ao mês. O gráfico mostra como os juros compostos fazem a dívida crescer quando nada é pago.</p>
+        </div>
         <div class="simulator reveal">
           <!-- Controles -->
           <div class="panel simulator__controls">
@@ -346,153 +560,293 @@
             <p class="sim-insight" id="sim-insight">—</p>
           </div>
         </div>
+
+        <!-- Termômetro + sinais de alerta -->
+        <div class="two-col">
+          <div class="panel reveal" id="termometro">
+            <header class="panel__header">
+              <div>
+                <h3>Termômetro do endividamento</h3>
+                <p>Quanto da sua renda já está comprometido com parcelas?</p>
+              </div>
+            </header>
+            <div class="th-inputs">
+              <div class="input-row">
+                <label for="th-income">Renda mensal</label>
+                <div class="control__input"><span>R$</span><input id="th-income" type="number" min="0" max="1000000" step="100" value="3000" inputmode="decimal" /></div>
+              </div>
+              <div class="input-row">
+                <label for="th-debts">Parcelas por mês</label>
+                <div class="control__input"><span>R$</span><input id="th-debts" type="number" min="0" max="1000000" step="50" value="1100" inputmode="decimal" /></div>
+              </div>
+            </div>
+            <div class="gauge">
+              <svg viewBox="0 0 220 128" aria-hidden="true">
+                <path class="gauge__track" d="M 20 110 A 90 90 0 0 1 200 110" />
+                <path class="gauge__fill" id="gauge-fill" d="M 20 110 A 90 90 0 0 1 200 110" />
+                <g id="gauge-ticks"></g>
+              </svg>
+              <div class="gauge__value">
+                <strong id="th-pct">0%</strong>
+                <span class="status" id="th-status">—</span>
+              </div>
+            </div>
+            <p class="th-message" id="th-message">—</p>
+            <p class="muted small">Referência usada por educadores financeiros: até 30% é saudável; acima de 50% há risco de superendividamento.</p>
+          </div>
+
+          <div class="panel reveal" id="alertas">
+            <header class="panel__header">
+              <div>
+                <h3>Sinais de alerta</h3>
+                <p>Marque o que acontece com você ou com sua família.</p>
+              </div>
+            </header>
+            <div class="checklist" id="checklist">
+              <label class="check"><input type="checkbox" id="chk-1" /><span class="check__box"></span>Pago só o mínimo da fatura com frequência</label>
+              <label class="check"><input type="checkbox" id="chk-2" /><span class="check__box"></span>Uso o cheque especial quase todo mês</label>
+              <label class="check"><input type="checkbox" id="chk-3" /><span class="check__box"></span>Já peguei empréstimo para pagar outra dívida</label>
+              <label class="check"><input type="checkbox" id="chk-4" /><span class="check__box"></span>Não sei quanto devo no total</label>
+              <label class="check"><input type="checkbox" id="chk-5" /><span class="check__box"></span>Mais de 30% da renda vai para parcelas</label>
+              <label class="check"><input type="checkbox" id="chk-6" /><span class="check__box"></span>Escondo compras ou dívidas da família</label>
+              <label class="check"><input type="checkbox" id="chk-7" /><span class="check__box"></span>Recebo ligações de cobrança</label>
+              <label class="check"><input type="checkbox" id="chk-8" /><span class="check__box"></span>Não tenho reserva para emergências</label>
+            </div>
+            <div class="alert-result" id="alert-result">
+              <div class="alert-result__bar"><span id="alert-bar"></span></div>
+              <p><span class="status" id="alert-status">Tudo tranquilo</span> <span id="alert-text">Nenhum sinal marcado. Continue acompanhando seus gastos.</span></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Como sair das dívidas -->
+        <div class="subhead reveal">
+          <h3>Como sair das dívidas, passo a passo</h3>
+          <p>A ordem importa: primeiro entender, depois parar, só então negociar.</p>
+        </div>
+        <ol class="steps">
+          <li class="step reveal"><span class="step__num">1</span><div><h4>Faça um raio-X</h4><p>Liste todas as dívidas com valor, juros e parcelas. O <strong>Registrato</strong>, do Banco Central, mostra de graça tudo o que você deve a bancos.</p></div></li>
+          <li class="step reveal"><span class="step__num">2</span><div><h4>Pare de criar dívidas</h4><p>Guarde o cartão, reduza o limite pelo app e peça ao banco para desativar o cheque especial.</p></div></li>
+          <li class="step reveal"><span class="step__num">3</span><div><h4>Monte um orçamento</h4><p>Renda menos gastos essenciais é o quanto sobra de verdade para pagar as dívidas.</p></div></li>
+          <li class="step reveal"><span class="step__num">4</span><div><h4>Priorize</h4><p>Primeiro moradia, água e luz. Depois as dívidas com juros mais altos, como rotativo e cheque especial.</p></div></li>
+          <li class="step reveal"><span class="step__num">5</span><div><h4>Negocie</h4><p>Bancos, Serasa Limpa Nome, Desenrola e mutirões do Procon costumam dar grandes descontos. Só aceite parcela que cabe no orçamento.</p></div></li>
+          <li class="step reveal"><span class="step__num">6</span><div><h4>Troque e proteja</h4><p>Troque dívida cara por barata (portabilidade, consignado) e comece uma reserva de emergência, mesmo pequena.</p></div></li>
+        </ol>
+
+        <!-- Direitos do consumidor -->
+        <div class="subhead reveal">
+          <h3>Seus direitos</h3>
+          <p>Quem está endividado continua tendo proteção da lei.</p>
+        </div>
+        <div class="rights">
+          <article class="right reveal"><span class="right__law">Lei 14.181/2021</span><h4>Lei do Superendividamento</h4><p>Permite renegociar todas as dívidas de uma vez, em um plano de pagamento que preserva o mínimo para viver.</p></article>
+          <article class="right reveal"><span class="right__law">Lei 14.690/2023</span><h4>Teto dos juros do cartão</h4><p>Juros e encargos do rotativo e do parcelamento da fatura não podem passar de 100% do valor original da dívida.</p></article>
+          <article class="right reveal"><span class="right__law">CDC, art. 42</span><h4>Cobrança sem constrangimento</h4><p>A cobrança não pode expor você ao ridículo nem ameaçar. Quem paga um valor indevido tem direito a receber em dobro.</p></article>
+          <article class="right reveal"><span class="right__law">CDC, art. 43</span><h4>Nome limpo em até 5 anos</h4><p>O registro em cadastros de inadimplentes não pode passar de 5 anos. Isso tira o nome da lista, mas não apaga a dívida.</p></article>
+        </div>
       </div>
     </section>
 
     <!-- =================================================
-         3. SEÇÃO EDUCATIVA (abas)
+         PARTE 3 · CARTÃO DE CRÉDITO
          ================================================= -->
-    <section id="educacao" class="section">
+    <section id="cartao" class="section">
       <div class="container">
         <div class="section__head reveal">
-          <span class="eyebrow">Aprenda</span>
-          <h2>Educação financeira, <span class="text-gradient">sem complicação</span></h2>
-          <p>Quatro conceitos essenciais para nunca cair nas armadilhas do crédito.</p>
+          <span class="eyebrow">Parte 3 · Cartão de crédito</span>
+          <h2>O cartão é ferramenta, <span class="text-gradient">não renda extra</span></h2>
+          <p>Usado com regras, o cartão organiza a vida financeira. Usado sem regras, é a porta de entrada da maioria das dívidas no Brasil.</p>
         </div>
 
-        <div class="tabs reveal">
-          <div class="tabs__list" role="tablist" aria-label="Tópicos educativos">
-            <button class="tabs__btn is-active" role="tab" aria-selected="true" aria-controls="tab-armadilha" id="tabbtn-armadilha" type="button">
-              <span class="tabs__num">01</span>Crédito fácil
-            </button>
-            <button class="tabs__btn" role="tab" aria-selected="false" aria-controls="tab-ciclo" id="tabbtn-ciclo" type="button" tabindex="-1">
-              <span class="tabs__num">02</span>Ciclo da dívida
-            </button>
-            <button class="tabs__btn" role="tab" aria-selected="false" aria-controls="tab-cartao" id="tabbtn-cartao" type="button" tabindex="-1">
-              <span class="tabs__num">03</span>Uso do cartão
-            </button>
-            <button class="tabs__btn" role="tab" aria-selected="false" aria-controls="tab-comparativo" id="tabbtn-comparativo" type="button" tabindex="-1">
-              <span class="tabs__num">04</span>Saudável x perigoso
-            </button>
-          </div>
-
-          <!-- Aba 1: Crédito fácil -->
-          <div class="tabs__panel is-active" role="tabpanel" id="tab-armadilha" aria-labelledby="tabbtn-armadilha">
-            <div class="split">
-              <div>
-                <h3>O que é crédito fácil?</h3>
-                <p class="lead">É o dinheiro oferecido com <strong>pouca burocracia</strong> e <strong>aprovação imediata</strong>: “dinheiro na conta em 5 minutos”, “sem consulta ao SPC”, “limite pré-aprovado”.</p>
-                <p>Parece uma ajuda, mas a facilidade tem um preço. Quanto mais fácil o acesso, maior costuma ser o risco para quem empresta — e esse risco é cobrado de você em forma de <strong>juros altíssimos</strong>.</p>
+        <!-- Anatomia da fatura -->
+        <div class="panel panel--pad-lg reveal" id="fatura">
+          <header class="panel__header">
+            <div>
+              <h3>Aprenda a ler a fatura</h3>
+              <p>Toque nos números para entender cada parte. Os dados são um exemplo.</p>
+            </div>
+          </header>
+          <div class="bill-layout">
+            <div class="bill">
+              <div class="bill__top">
+                <div>
+                  <span class="bill__bank">Banco Exemplo</span>
+                  <span class="muted small">Fatura de outubro · Cartão final 2026</span>
+                </div>
+                <button class="hotspot" data-spot="3" type="button" aria-label="Explicar data de fechamento">4</button>
               </div>
-              <div class="trap-list">
-                <h4>Por que é uma armadilha</h4>
-                <div class="trap">
-                  <span class="trap__icon">%</span>
-                  <div><strong>Juros escondidos</strong><p>A parcela “cabe no bolso”, mas o custo total (CET) pode ser o dobro do valor pego.</p></div>
+
+              <div class="bill__summary">
+                <div class="bill__cell bill__cell--main">
+                  <span>Total da fatura</span>
+                  <strong>R$ 1.842,90</strong>
+                  <button class="hotspot" data-spot="0" type="button" aria-label="Explicar total da fatura">1</button>
                 </div>
-                <div class="trap">
-                  <span class="trap__icon">⚡</span>
-                  <div><strong>Decisão por impulso</strong><p>A rapidez elimina o tempo de pensar se a compra é mesmo necessária.</p></div>
+                <div class="bill__cell">
+                  <span>Pagamento mínimo</span>
+                  <strong>R$ 276,44</strong>
+                  <button class="hotspot" data-spot="1" type="button" aria-label="Explicar pagamento mínimo">2</button>
                 </div>
-                <div class="trap">
-                  <span class="trap__icon">∞</span>
-                  <div><strong>Dívida que alimenta dívida</strong><p>Muitos pegam um novo empréstimo para pagar o anterior.</p></div>
-                </div>
-                <div class="trap">
-                  <span class="trap__icon">!</span>
-                  <div><strong>Golpes</strong><p>Desconfie de quem pede “taxa antecipada” para liberar crédito. Instituição séria não faz isso.</p></div>
+                <div class="bill__cell">
+                  <span>Vencimento</span>
+                  <strong>15/10</strong>
+                  <button class="hotspot" data-spot="2" type="button" aria-label="Explicar vencimento">3</button>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <!-- Aba 2: Ciclo do endividamento -->
-          <div class="tabs__panel" role="tabpanel" id="tab-ciclo" aria-labelledby="tabbtn-ciclo" hidden>
-            <h3>O ciclo do endividamento</h3>
-            <p class="lead">Entender o ciclo é o primeiro passo para quebrá-lo. Passe o mouse (ou toque) em cada etapa.</p>
+              <div class="bill__dates muted small">Fechamento: 08/10 · Melhor dia de compra: 08/10</div>
 
-            <div class="cycle">
-              <svg class="cycle__ring" viewBox="0 0 400 400" aria-hidden="true">
-                <defs>
-                  <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-                    <path d="M0 0L10 5L0 10z" fill="currentColor" />
-                  </marker>
-                </defs>
-                <circle cx="200" cy="200" r="150" class="cycle__track" />
-                <circle cx="200" cy="200" r="150" class="cycle__dash" />
-              </svg>
+              <ul class="bill__items">
+                <li><span>Supermercado</span><span>R$ 612,30</span></li>
+                <li><span>Restaurantes e lazer</span><span>R$ 460,40</span></li>
+                <li><span>Loja online <em>parcela 2/4</em></span><span>R$ 243,90</span></li>
+                <li><span>Celular <em>parcela 5/10</em></span><span>R$ 189,90</span></li>
+                <li><span>Posto de combustível</span><span>R$ 180,00</span></li>
+                <li><span>Tênis <em>parcela 3/6</em></span><span>R$ 116,50</span></li>
+                <li><span>Streaming</span><span>R$ 39,90</span></li>
+              </ul>
 
-              <div class="cycle__center">
-                <span class="cycle__step-num" id="cycle-num">01</span>
-                <strong id="cycle-title">Gasto acima da renda</strong>
-                <p id="cycle-text">Compras por impulso ou emergências sem reserva fazem os gastos ultrapassarem o salário.</p>
-              </div>
-
-              <button class="cycle__node is-active" style="--i:0" data-step="0" type="button"><span>1</span>Gasto</button>
-              <button class="cycle__node" style="--i:1" data-step="1" type="button"><span>2</span>Crédito</button>
-              <button class="cycle__node" style="--i:2" data-step="2" type="button"><span>3</span>Mínimo</button>
-              <button class="cycle__node" style="--i:3" data-step="3" type="button"><span>4</span>Juros</button>
-              <button class="cycle__node" style="--i:4" data-step="4" type="button"><span>5</span>Nova dívida</button>
-            </div>
-
-            <div class="callout">
-              <strong>Como sair do ciclo:</strong> pare de usar o crédito caro, liste todas as dívidas, negocie (programas como o <em>Desenrola</em> e mutirões do Serasa ajudam), troque dívida cara por barata (ex.: consignado no lugar do rotativo) e monte uma reserva de emergência.
-            </div>
-          </div>
-
-          <!-- Aba 3: Uso consciente do cartão -->
-          <div class="tabs__panel" role="tabpanel" id="tab-cartao" aria-labelledby="tabbtn-cartao" hidden>
-            <h3>Uso consciente do cartão de crédito</h3>
-            <p class="lead">O cartão não é vilão — é uma ferramenta. Usado com regra, ele organiza a vida financeira e até gera benefícios.</p>
-            <div class="tips">
-              <article class="tip"><span class="tip__num">01</span><h4>Pague sempre o total</h4><p>Pagar só o mínimo joga o restante no rotativo, a linha de crédito mais cara do país.</p></article>
-              <article class="tip"><span class="tip__num">02</span><h4>Limite não é renda</h4><p>Use no máximo 30% do seu limite e nunca gaste mais do que já ganha no mês.</p></article>
-              <article class="tip"><span class="tip__num">03</span><h4>Cuidado com parcelas</h4><p>Várias parcelas pequenas somadas comprometem os próximos meses. Anote todas.</p></article>
-              <article class="tip"><span class="tip__num">04</span><h4>Escolha a melhor data</h4><p>Compras logo após o fechamento da fatura dão até ~40 dias para pagar sem juros.</p></article>
-              <article class="tip"><span class="tip__num">05</span><h4>Acompanhe pelo app</h4><p>Ative notificações de cada compra para ter controle em tempo real e evitar fraudes.</p></article>
-              <article class="tip"><span class="tip__num">06</span><h4>Evite saque no crédito</h4><p>Saque no cartão cobra tarifa e juros desde o primeiro dia. É uma das piores opções.</p></article>
-            </div>
-          </div>
-
-          <!-- Aba 4: Comparativo -->
-          <div class="tabs__panel" role="tabpanel" id="tab-comparativo" aria-labelledby="tabbtn-comparativo" hidden>
-            <h3>Crédito saudável x crédito perigoso</h3>
-            <p class="lead">Nem toda dívida é ruim. A diferença está no motivo, no custo e no planejamento.</p>
-            <div class="compare">
-              <div class="compare__col compare__col--good">
-                <header><span class="compare__badge">✓</span><h4>Crédito saudável</h4></header>
-                <ul>
-                  <li>Planejado e com objetivo claro (estudo, casa, ferramenta de trabalho)</li>
-                  <li>Parcela de até 30% da renda mensal</li>
-                  <li>Juros baixos e CET comparado entre bancos</li>
-                  <li>Ajuda a gerar valor ou renda no futuro</li>
-                  <li>Você sabe exatamente quando termina</li>
-                </ul>
-              </div>
-              <div class="compare__vs" aria-hidden="true">VS</div>
-              <div class="compare__col compare__col--bad">
-                <header><span class="compare__badge">✕</span><h4>Crédito perigoso</h4></header>
-                <ul>
-                  <li>Usado por impulso ou para cobrir outra dívida</li>
-                  <li>Parcelas que somam mais da metade da renda</li>
-                  <li>Rotativo, cheque especial e empréstimos “sem consulta”</li>
-                  <li>Financia consumo que acaba antes da dívida</li>
-                  <li>Valor final desconhecido ou que só aumenta</li>
-                </ul>
+              <div class="bill__footer">
+                <div class="bill__cell">
+                  <span>Parcelas das próximas faturas</span>
+                  <strong>R$ 1.786,80</strong>
+                  <button class="hotspot" data-spot="4" type="button" aria-label="Explicar parcelas futuras">5</button>
+                </div>
+                <div class="bill__cell">
+                  <span>Limite total R$ 4.000 · disponível</span>
+                  <strong>R$ 370,30</strong>
+                  <button class="hotspot" data-spot="5" type="button" aria-label="Explicar limite">6</button>
+                </div>
+                <div class="bill__cell">
+                  <span>Juros do rotativo · CET</span>
+                  <strong>13,9% a.m. · 412% a.a.</strong>
+                  <button class="hotspot" data-spot="6" type="button" aria-label="Explicar juros e CET">7</button>
+                </div>
               </div>
             </div>
 
-            <!-- Barras comparando taxas -->
-            <div class="rate-bars">
-              <h4>Quanto custa ao ano? <span class="muted">(taxas médias aproximadas)</span></h4>
-              <div class="rate-bar" data-value="17"><span class="rate-bar__label">Financ. imóvel</span><div class="rate-bar__track"><span class="rate-bar__fill rate-bar__fill--good"></span></div><span class="rate-bar__value">~12%</span></div>
-              <div class="rate-bar" data-value="24"><span class="rate-bar__label">Consignado</span><div class="rate-bar__track"><span class="rate-bar__fill rate-bar__fill--good"></span></div><span class="rate-bar__value">~25%</span></div>
-              <div class="rate-bar" data-value="46"><span class="rate-bar__label">Crédito pessoal</span><div class="rate-bar__track"><span class="rate-bar__fill rate-bar__fill--warn"></span></div><span class="rate-bar__value">~90%</span></div>
-              <div class="rate-bar" data-value="55"><span class="rate-bar__label">Cheque especial</span><div class="rate-bar__track"><span class="rate-bar__fill rate-bar__fill--bad"></span></div><span class="rate-bar__value">~130%</span></div>
-              <div class="rate-bar" data-value="100"><span class="rate-bar__label">Rotativo</span><div class="rate-bar__track"><span class="rate-bar__fill rate-bar__fill--bad"></span></div><span class="rate-bar__value">~430%</span></div>
-              <p class="muted small">Barras em escala de raiz quadrada para caber na tela — a diferença real é ainda maior.</p>
+            <div class="bill-explain" id="bill-explain" aria-live="polite">
+              <span class="bill-explain__num" id="spot-num">1</span>
+              <h4 id="spot-title">Total da fatura</h4>
+              <p id="spot-text">—</p>
+              <div class="bill-explain__tip" id="spot-tip">—</div>
+              <div class="bill-explain__nav">
+                <button class="btn btn--ghost btn--sm" id="spot-prev" type="button">Anterior</button>
+                <button class="btn btn--ghost btn--sm" id="spot-next" type="button">Próximo</button>
+              </div>
             </div>
           </div>
+        </div>
+
+        <!-- Mínimo x Total -->
+        <div class="panel panel--pad-lg reveal" id="minimo">
+          <header class="panel__header">
+            <div>
+              <h3>Pagar o mínimo ou o total?</h3>
+              <p>Compare o que acontece se você pagar só o mínimo todo mês, sem fazer novas compras.</p>
+            </div>
+          </header>
+
+          <div class="mt-grid">
+            <div class="mt-controls">
+              <div class="input-row">
+                <label for="mt-bill">Valor da fatura</label>
+                <div class="control__input"><span>R$</span><input id="mt-bill" type="number" min="100" max="100000" step="100" value="2000" inputmode="decimal" /></div>
+              </div>
+              <div class="input-row">
+                <label for="mt-rate">Juros do rotativo</label>
+                <div class="control__input"><input id="mt-rate" type="number" min="1" max="25" step="0.5" value="14" inputmode="decimal" /><span>% a.m.</span></div>
+              </div>
+              <div class="input-row">
+                <label for="mt-min">Pagamento mínimo</label>
+                <div class="control__input"><input id="mt-min" type="number" min="5" max="90" step="1" value="15" inputmode="numeric" /><span>%</span></div>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="mt-cap" checked />
+                <span class="switch__track"><span class="switch__thumb"></span></span>
+                <span>Aplicar o teto da Lei 14.690 (juros até 100% da dívida)</span>
+              </label>
+            </div>
+
+            <div class="mt-compare">
+              <div class="mt-card mt-card--good">
+                <span class="status status--good">Pagando o total</span>
+                <strong id="mt-total-paid">—</strong>
+                <span class="muted small">em 1 mês, sem juros</span>
+              </div>
+              <div class="mt-card mt-card--bad">
+                <span class="status status--critical">Pagando só o mínimo</span>
+                <strong id="mt-min-paid">—</strong>
+                <span class="muted small" id="mt-min-info">—</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="chart-box chart-box--md">
+            <canvas id="minChart" aria-label="Gráfico comparando o saldo devedor e o total pago ao pagar só o mínimo" role="img"></canvas>
+          </div>
+          <p class="sim-insight" id="mt-insight">—</p>
+          <p class="muted small">Simplificação educativa: na prática, o banco só pode manter a dívida no rotativo por um mês e depois oferece um parcelamento, que também tem juros altos.</p>
+        </div>
+
+        <!-- Melhor dia de compra -->
+        <div class="panel panel--pad-lg reveal" id="calendario">
+          <header class="panel__header">
+            <div>
+              <h3>Qual o melhor dia para comprar?</h3>
+              <p>A data da compra muda quanto tempo você tem até pagar a fatura.</p>
+            </div>
+          </header>
+          <div class="cal-controls">
+            <div class="input-row">
+              <label for="cal-close">Dia do fechamento da fatura</label>
+              <select id="cal-close" class="select"></select>
+            </div>
+            <div class="input-row input-row--grow">
+              <label for="cal-buy">Dia da compra: <strong id="cal-buy-label">9</strong></label>
+              <input class="range" id="cal-buy" type="range" min="1" max="28" step="1" value="9" />
+            </div>
+          </div>
+
+          <div class="timeline" id="timeline">
+            <div class="timeline__track"><span class="timeline__fill" id="tl-fill"></span></div>
+            <div class="timeline__marker timeline__marker--buy" id="tl-buy"><span>Compra</span><strong>—</strong></div>
+            <div class="timeline__marker timeline__marker--close" id="tl-close"><span>Fechamento</span><strong>—</strong></div>
+            <div class="timeline__marker timeline__marker--due" id="tl-due"><span>Vencimento</span><strong>—</strong></div>
+          </div>
+
+          <div class="cal-result">
+            <div class="cal-days"><strong id="cal-days">—</strong><span>dias para pagar</span></div>
+            <p id="cal-text">—</p>
+          </div>
+          <p class="muted small">Considera vencimento 7 dias após o fechamento e que compras feitas no dia do fechamento já entram na fatura seguinte. Confira as datas no app do seu banco.</p>
+        </div>
+
+        <!-- Dicas -->
+        <div class="subhead reveal">
+          <h3>Seis regras para usar bem o cartão</h3>
+        </div>
+        <div class="tips">
+          <article class="tip reveal"><h4>Pague sempre o total</h4><p>Pagar só o mínimo joga o restante no rotativo, a linha de crédito mais cara do país.</p></article>
+          <article class="tip reveal"><h4>Limite não é renda</h4><p>Use no máximo 30% do limite e nunca gaste mais do que já ganha no mês.</p></article>
+          <article class="tip reveal"><h4>Some as parcelas</h4><p>Várias parcelas pequenas somadas comprometem os próximos meses. Anote todas.</p></article>
+          <article class="tip reveal"><h4>Compre no melhor dia</h4><p>Compras feitas no dia do fechamento dão até cerca de 37 dias para pagar sem juros.</p></article>
+          <article class="tip reveal"><h4>Ative as notificações</h4><p>Receber um aviso a cada compra ajuda a controlar gastos e a perceber fraudes rápido.</p></article>
+          <article class="tip reveal"><h4>Nunca saque no crédito</h4><p>Saque no cartão cobra tarifa e juros desde o primeiro dia. É uma das piores opções.</p></article>
+        </div>
+
+        <!-- Mitos e verdades -->
+        <div class="subhead reveal">
+          <h3>Mito ou verdade?</h3>
+          <p>Toque em cada cartão para ver a resposta.</p>
+        </div>
+        <div class="myths" id="myths">
+          <button class="myth reveal" type="button" data-verdict="mito"><span class="myth__inner"><span class="myth__front">“Pagar o mínimo mantém meu nome limpo, então está tudo bem.”<em>Toque para ver</em></span><span class="myth__back"><b class="status status--critical">Mito</b>O nome fica limpo, mas o restante vira dívida no rotativo, com os juros mais altos do mercado.</span></span></button>
+          <button class="myth reveal" type="button" data-verdict="mito"><span class="myth__inner"><span class="myth__front">“Parcelado sem juros não tem custo nenhum.”<em>Toque para ver</em></span><span class="myth__back"><b class="status status--warning">Depende</b>Muitas vezes o preço à vista tem desconto que você perde. E as parcelas ocupam o limite e a renda dos próximos meses.</span></span></button>
+          <button class="myth reveal" type="button" data-verdict="mito"><span class="myth__inner"><span class="myth__front">“Ter vários cartões aumenta meu crédito.”<em>Toque para ver</em></span><span class="myth__back"><b class="status status--critical">Mito</b>Mais cartões significam mais anuidades, mais faturas para controlar e mais chance de perder o controle.</span></span></button>
+          <button class="myth reveal" type="button" data-verdict="verdade"><span class="myth__inner"><span class="myth__front">“Pagar a fatura em dia ajuda a construir um bom histórico.”<em>Toque para ver</em></span><span class="myth__back"><b class="status status--good">Verdade</b>O Cadastro Positivo registra seus pagamentos em dia, o que pode melhorar seu score e baratear créditos no futuro.</span></span></button>
+          <button class="myth reveal" type="button" data-verdict="mito"><span class="myth__inner"><span class="myth__front">“O limite que o banco me dá é o quanto posso gastar.”<em>Toque para ver</em></span><span class="myth__back"><b class="status status--critical">Mito</b>O limite é definido pelo banco, não pelo seu orçamento. Quem decide quanto você pode gastar é a sua renda.</span></span></button>
+          <button class="myth reveal" type="button" data-verdict="verdade"><span class="myth__inner"><span class="myth__front">“Posso pedir para o banco diminuir meu limite.”<em>Toque para ver</em></span><span class="myth__back"><b class="status status--good">Verdade</b>Você pode reduzir o limite pelo app a qualquer momento. Isso ajuda a evitar gastos por impulso.</span></span></button>
         </div>
       </div>
     </section>
@@ -503,9 +857,9 @@
     <section id="quiz" class="section">
       <div class="container container--narrow">
         <div class="section__head reveal">
-          <span class="eyebrow">Quiz</span>
+          <span class="eyebrow">Parte 4 · Quiz</span>
           <h2>Teste seus <span class="text-gradient">conhecimentos</span></h2>
-          <p>5 perguntas rápidas. Veja se você está pronto para usar o crédito com inteligência.</p>
+          <p>5 perguntas sorteadas entre 10. Cada vez que você joga, o desafio muda.</p>
         </div>
 
         <div class="panel quiz reveal" id="quiz-card">

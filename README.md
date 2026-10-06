@@ -16,9 +16,10 @@ python3 -m http.server 8000
 
 1. **Login e cadastro**: as contas ficam no `localStorage` e a senha é salva como hash SHA-256. Os campos são validados, há medidor de força da senha e mensagens de erro claras.
 2. **Painel**: cards com números que sobem ao carregar, gráfico de linha dos juros do rotativo e gráfico de barras com as principais fontes de dívida.
-3. **Simulador "bola de neve"**: você informa o valor e os juros ao mês e vê o total em 1, 3, 6 e 12 meses. O gráfico atualiza em tempo real.
-4. **Aprenda**: abas sobre crédito fácil, o ciclo do endividamento (diagrama interativo), uso consciente do cartão e crédito saudável x perigoso.
-5. **Quiz**: 5 perguntas com pontuação, barra de progresso, explicação de cada resposta e feedback final. A melhor pontuação fica salva.
+3. **Parte 1 · Crédito fácil**: o que é e por que é uma armadilha, os 6 tipos mais comuns com taxa e nível de risco, a calculadora **"Quanto custa de verdade?"** (descobre os juros escondidos de uma oferta parcelada) e o comparativo crédito saudável x perigoso.
+4. **Parte 2 · Endividamento**: o ciclo do endividamento (interativo), o simulador **bola de neve** (1, 3, 6 e 12 meses), o **termômetro** (quanto da renda vai para parcelas), a lista de **sinais de alerta**, o passo a passo para sair das dívidas e os direitos do consumidor.
+5. **Parte 3 · Cartão de crédito**: uma **fatura explicada** parte por parte, o comparador **mínimo x total**, a ferramenta do **melhor dia de compra**, 6 regras de uso e cartões de **mito ou verdade**.
+6. **Quiz**: 5 perguntas sorteadas entre 10, com pontuação, barra de progresso, explicação de cada resposta e feedback final. A melhor pontuação fica salva.
 
 ## Arquivos
 
