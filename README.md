@@ -1,4 +1,4 @@
-# verde. · Educação Financeira
+# Créditto · Educação Financeira
 
 Site interativo sobre **crédito fácil, endividamento e cartão de crédito**, feito para uma apresentação escolar (Colégio IP Arujá).
 

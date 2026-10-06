@@ -5,17 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Educação financeira: crédito fácil, endividamento e uso consciente do cartão de crédito." />
   <meta name="theme-color" content="#050706" />
-  <title>Verde · Educação Financeira</title>
+  <title>Créditto · Educação Financeira</title>
 
-  <!-- Tipografia: Inter (texto) -->
+  <!-- Tipografia: Inter (texto) e Montserrat (nome da marca, como na logo) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@800&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Ícone simples em SVG embutido -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2310b981'/%3E%3Cpath d='M9 11l7 11 7-11' stroke='%23050706' stroke-width='3.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
 </head>
 <body>
 
@@ -31,10 +30,7 @@
        ===================================================== -->
   <main id="auth-view" class="auth" aria-labelledby="auth-title">
     <section class="auth__brand">
-      <a class="logo" href="#" aria-label="Verde">
-        <span class="logo__mark">V</span>
-        <span class="logo__text">verde<span class="logo__dot">.</span></span>
-      </a>
+      <img class="auth__logo" src="assets/logo-creditto.png" alt="Créditto · Educação Financeira" width="720" height="509" />
 
       <div class="auth__pitch">
         <span class="pill"><span class="pill__dot"></span>Educação financeira</span>
@@ -163,9 +159,9 @@
     <!-- Barra de navegação -->
     <header class="nav" id="nav">
       <div class="nav__inner container">
-        <a class="logo" href="#dashboard" aria-label="Verde - início">
-          <span class="logo__mark">V</span>
-          <span class="logo__text">verde<span class="logo__dot">.</span></span>
+        <a class="logo" href="#dashboard" aria-label="Créditto, voltar ao início">
+          <img class="logo__mark" src="assets/logo-mark.png" alt="" width="240" height="235" />
+          <span class="logo__text">Créditto</span>
         </a>
 
         <nav class="nav__links" id="nav-links" aria-label="Seções">
@@ -910,9 +906,8 @@
     <!-- Rodapé -->
     <footer class="footer">
       <div class="container footer__inner">
-        <a class="logo" href="#dashboard">
-          <span class="logo__mark">V</span>
-          <span class="logo__text">verde<span class="logo__dot">.</span></span>
+        <a href="#dashboard" aria-label="Créditto, voltar ao início">
+          <img class="footer__logo" src="assets/logo-creditto.png" alt="Créditto · Educação Financeira" width="720" height="509" />
         </a>
         <p>Projeto de educação financeira · Colégio IP Arujá · 2026</p>
         <p class="muted small">Dados aproximados com base em CNC (Peic), Serasa e Banco Central. Conteúdo educativo, não é recomendação financeira.</p>

@@ -1,5 +1,5 @@
 /* =========================================================
-   VERDE · Educação Financeira
+   CRÉDITTO · Educação Financeira
    Lógica da aplicação
    ---------------------------------------------------------
    Sumário
@@ -51,8 +51,8 @@ function showToast(message) {
 }
 
 /* ---------- 2. ARMAZENAMENTO ---------- */
-const STORAGE_USERS = "verde_users";
-const STORAGE_SESSION = "verde_session";
+const STORAGE_USERS = "creditto_users";
+const STORAGE_SESSION = "creditto_session";
 
 /** Lê e grava com try/catch: o localStorage pode estar bloqueado (aba anônima, etc.). */
 const Store = {
@@ -93,7 +93,7 @@ function updateUser(email, changes) {
  * Observação: é um projeto didático — autenticação real exige um servidor.
  */
 async function hashPassword(password) {
-  const salted = `verde::${password}`;
+  const salted = `creditto::${password}`;
   if (window.crypto?.subtle) {
     const data = new TextEncoder().encode(salted);
     const buffer = await crypto.subtle.digest("SHA-256", data);
@@ -492,10 +492,10 @@ function initCardGlow() {
 
 /* ---------- 7. GRÁFICOS ---------- */
 const COLORS = {
-  green: "#10b981",
-  greenLight: "#34d399",
-  greenSoft: "rgba(16, 185, 129, 0.18)",
-  greenMuted: "#1f6b52",
+  green: "#17c94f",
+  greenLight: "#3eea63",
+  greenSoft: "rgba(23, 201, 79, 0.18)",
+  greenMuted: "#1c6b38",
   neutral: "#4b5a53",
   text: "#b4bfb9",
   muted: "#7a8780",
@@ -536,8 +536,8 @@ function setChartDefaults() {
 /** Cria um gradiente vertical para preencher a área sob a linha. */
 function areaGradient(ctx, area) {
   const g = ctx.createLinearGradient(0, area.top, 0, area.bottom);
-  g.addColorStop(0, "rgba(16, 185, 129, 0.35)");
-  g.addColorStop(1, "rgba(16, 185, 129, 0)");
+  g.addColorStop(0, "rgba(23, 201, 79, 0.35)");
+  g.addColorStop(1, "rgba(23, 201, 79, 0)");
   return g;
 }
 
@@ -655,7 +655,7 @@ function initCharts() {
           data: fontes.map((f) => f[1]),
           // O cartão de crédito recebe destaque; as demais barras ficam em tom mais discreto
           backgroundColor: fontes.map((_, i) => (i === 0 ? COLORS.green : COLORS.greenMuted)),
-          hoverBackgroundColor: fontes.map((_, i) => (i === 0 ? COLORS.greenLight : "#2a8a69")),
+          hoverBackgroundColor: fontes.map((_, i) => (i === 0 ? COLORS.greenLight : "#238a45")),
           borderRadius: 6,
           borderSkipped: false,
           barThickness: "flex",
