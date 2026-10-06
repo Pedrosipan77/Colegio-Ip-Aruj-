@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Educação financeira: crédito fácil, endividamento e uso consciente do cartão de crédito." />
+  <meta name="theme-color" content="#050706" />
+  <title>Verde · Educação Financeira</title>
+
+  <!-- Tipografia: Inter (texto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Ícone simples em SVG embutido -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2310b981'/%3E%3Cpath d='M9 11l7 11 7-11' stroke='%23050706' stroke-width='3.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+</head>
+<body>
+
+  <!-- Fundo decorativo (gradientes suaves) -->
+  <div class="bg-glow" aria-hidden="true">
+    <span class="glow glow--1"></span>
+    <span class="glow glow--2"></span>
+    <span class="grid-overlay"></span>
+  </div>
+
+  <!-- =====================================================
+       1. TELA DE LOGIN / CADASTRO
+       ===================================================== -->
+  <main id="auth-view" class="auth" aria-labelledby="auth-title">
+    <section class="auth__brand">
+      <a class="logo" href="#" aria-label="Verde">
+        <span class="logo__mark">V</span>
+        <span class="logo__text">verde<span class="logo__dot">.</span></span>
+      </a>
+
+      <div class="auth__pitch">
+        <span class="pill"><span class="pill__dot"></span>Educação financeira</span>
+        <h1 class="auth__headline">Entenda o crédito <span class="text-gradient">antes</span> que ele entenda você.</h1>
+        <p class="auth__sub">Simule juros, visualize o efeito bola de neve e aprenda a usar o cartão de crédito a seu favor.</p>
+
+        <!-- Cartão de crédito decorativo -->
+        <div class="credit-card" aria-hidden="true">
+          <div class="credit-card__top">
+            <span class="credit-card__chip"></span>
+            <svg class="credit-card__wave" viewBox="0 0 24 24"><path d="M8.5 7.5a6 6 0 0 1 0 9M12 5a9.5 9.5 0 0 1 0 14M5 10a2.5 2.5 0 0 1 0 4" /></svg>
+          </div>
+          <div class="credit-card__number">•••• •••• •••• 2026</div>
+          <div class="credit-card__bottom">
+            <div>
+              <small>Titular</small>
+              <span>Consumidor Consciente</span>
+            </div>
+            <div class="credit-card__brand"><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="auth__foot">Projeto escolar · Colégio IP Arujá</p>
+    </section>
+
+    <section class="auth__panel">
+      <div class="auth-card" id="auth-card">
+        <div class="auth-card__header">
+          <h2 id="auth-title">Bem-vindo de volta</h2>
+          <p id="auth-subtitle">Entre para acessar seu painel financeiro.</p>
+        </div>
+
+        <!-- Alternador Entrar / Criar conta -->
+        <div class="segmented" role="tablist" aria-label="Escolha entre entrar ou criar conta">
+          <button class="segmented__btn is-active" role="tab" aria-selected="true" data-auth-tab="login" type="button">Entrar</button>
+          <button class="segmented__btn" role="tab" aria-selected="false" data-auth-tab="register" type="button">Criar conta</button>
+          <span class="segmented__thumb" aria-hidden="true"></span>
+        </div>
+
+        <!-- Mensagem geral do formulário -->
+        <div class="form-alert" id="form-alert" role="alert" hidden></div>
+
+        <!-- Formulário de LOGIN -->
+        <form id="login-form" class="form" novalidate>
+          <div class="field">
+            <label for="login-email">E-mail</label>
+            <div class="field__control">
+              <svg class="field__icon" viewBox="0 0 24 24"><path d="M4 6h16v12H4z M4 7l8 6 8-6"/></svg>
+              <input id="login-email" name="email" type="email" placeholder="voce@email.com" autocomplete="email" />
+            </div>
+            <small class="field__error" data-error-for="login-email"></small>
+          </div>
+
+          <div class="field">
+            <label for="login-password">Senha</label>
+            <div class="field__control">
+              <svg class="field__icon" viewBox="0 0 24 24"><path d="M6 11h12v9H6z M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg>
+              <input id="login-password" name="password" type="password" placeholder="Sua senha" autocomplete="current-password" />
+              <button class="field__toggle" type="button" data-toggle-password="login-password" aria-label="Mostrar senha">
+                <svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <small class="field__error" data-error-for="login-password"></small>
+          </div>
+
+          <button class="btn btn--primary btn--block" type="submit">
+            <span class="btn__label">Entrar</span>
+            <span class="btn__spinner" aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <!-- Formulário de CADASTRO -->
+        <form id="register-form" class="form" novalidate hidden>
+          <div class="field">
+            <label for="reg-name">Nome completo</label>
+            <div class="field__control">
+              <svg class="field__icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
+              <input id="reg-name" name="name" type="text" placeholder="Seu nome" autocomplete="name" />
+            </div>
+            <small class="field__error" data-error-for="reg-name"></small>
+          </div>
+
+          <div class="field">
+            <label for="reg-email">E-mail</label>
+            <div class="field__control">
+              <svg class="field__icon" viewBox="0 0 24 24"><path d="M4 6h16v12H4z M4 7l8 6 8-6"/></svg>
+              <input id="reg-email" name="email" type="email" placeholder="voce@email.com" autocomplete="email" />
+            </div>
+            <small class="field__error" data-error-for="reg-email"></small>
+          </div>
+
+          <div class="field">
+            <label for="reg-password">Senha</label>
+            <div class="field__control">
+              <svg class="field__icon" viewBox="0 0 24 24"><path d="M6 11h12v9H6z M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg>
+              <input id="reg-password" name="password" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password" />
+              <button class="field__toggle" type="button" data-toggle-password="reg-password" aria-label="Mostrar senha">
+                <svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <!-- Medidor de força da senha -->
+            <div class="strength" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <small class="field__hint" id="strength-label">Use letras, números e símbolos.</small>
+            <small class="field__error" data-error-for="reg-password"></small>
+          </div>
+
+          <button class="btn btn--primary btn--block" type="submit">
+            <span class="btn__label">Criar minha conta</span>
+            <span class="btn__spinner" aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <p class="auth-card__legal">Os dados ficam salvos apenas no seu navegador (localStorage).</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================================================
+       APLICAÇÃO (visível após login)
+       ===================================================== -->
+  <div id="app-view" class="app" hidden>
+
+    <!-- Barra de navegação -->
+    <header class="nav" id="nav">
+      <div class="nav__inner container">
+        <a class="logo" href="#dashboard" aria-label="Verde - início">
+          <span class="logo__mark">V</span>
+          <span class="logo__text">verde<span class="logo__dot">.</span></span>
+        </a>
+
+        <nav class="nav__links" id="nav-links" aria-label="Seções">
+          <a href="#dashboard" class="nav__link is-active">Painel</a>
+          <a href="#simulador" class="nav__link">Simulador</a>
+          <a href="#educacao" class="nav__link">Aprenda</a>
+          <a href="#quiz" class="nav__link">Quiz</a>
+        </nav>
+
+        <div class="nav__user">
+          <span class="avatar" id="user-avatar" aria-hidden="true">?</span>
+          <span class="nav__name" id="user-name">Usuário</span>
+          <button class="btn btn--ghost btn--sm" id="logout-btn" type="button">Sair</button>
+          <button class="nav__burger" id="nav-burger" type="button" aria-label="Abrir menu" aria-expanded="false">
+            <span></span><span></span>
+          </button>
+        </div>
+      </div>
+      <div class="nav__progress" id="scroll-progress" aria-hidden="true"></div>
+    </header>
+
+    <!-- =================================================
+         2. DASHBOARD
+         ================================================= -->
+    <section id="dashboard" class="section section--hero">
+      <div class="container">
+        <div class="hero reveal">
+          <div>
+            <span class="pill"><span class="pill__dot"></span>Panorama do endividamento no Brasil</span>
+            <h1 class="hero__title">Olá, <span id="hero-name" class="text-gradient">visitante</span>.<br />Vamos falar de dinheiro?</h1>
+            <p class="hero__sub">Os números abaixo mostram por que entender crédito é uma das habilidades mais importantes da vida adulta.</p>
+          </div>
+          <div class="hero__actions">
+            <a href="#simulador" class="btn btn--primary">Simular uma dívida</a>
+            <a href="#quiz" class="btn btn--outline">Fazer o quiz</a>
+          </div>
+        </div>
+
+        <!-- Cards de estatísticas com contadores animados -->
+        <div class="stats">
+          <article class="stat-card reveal">
+            <div class="stat-card__icon">
+              <svg viewBox="0 0 24 24"><path d="M3 10l9-6 9 6M5 10v9h14v-9M9 19v-5h6v5"/></svg>
+            </div>
+            <p class="stat-card__label">Famílias endividadas</p>
+            <p class="stat-card__value"><span class="counter" data-target="78" data-decimals="0">0</span>%</p>
+            <p class="stat-card__meta">possuem algum tipo de dívida</p>
+          </article>
+
+          <article class="stat-card reveal">
+            <div class="stat-card__icon">
+              <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h3"/></svg>
+            </div>
+            <p class="stat-card__label">Dívidas no cartão</p>
+            <p class="stat-card__value"><span class="counter" data-target="85" data-decimals="0">0</span>%</p>
+            <p class="stat-card__meta">dos endividados devem no cartão</p>
+          </article>
+
+          <article class="stat-card reveal">
+            <div class="stat-card__icon">
+              <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c1-3.5 3.5-5.5 6.5-5.5s5.5 2 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2 .7 3.2 2.6 3.5 5.5"/></svg>
+            </div>
+            <p class="stat-card__label">Brasileiros inadimplentes</p>
+            <p class="stat-card__value"><span class="counter" data-target="72" data-decimals="0">0</span> mi</p>
+            <p class="stat-card__meta">com contas em atraso</p>
+          </article>
+
+          <article class="stat-card stat-card--danger reveal">
+            <div class="stat-card__icon">
+              <svg viewBox="0 0 24 24"><path d="M4 18l6-6 4 4 6-8M14 8h6v6"/></svg>
+            </div>
+            <p class="stat-card__label">Juros do rotativo</p>
+            <p class="stat-card__value"><span class="counter" data-target="430" data-decimals="0">0</span>%</p>
+            <p class="stat-card__meta">ao ano, em média (antes do teto de 2024)</p>
+          </article>
+        </div>
+
+        <!-- Gráficos -->
+        <div class="charts">
+          <article class="panel panel--wide reveal">
+            <header class="panel__header">
+              <div>
+                <h3>Juros rotativos do cartão</h3>
+                <p>Saldo de uma dívida de <strong>R$ 1.000</strong> no rotativo a <strong>14% ao mês</strong>, sem nenhum pagamento.</p>
+              </div>
+              <div class="chip-group" role="group" aria-label="Período do gráfico">
+                <button class="chip" data-range="6" type="button">6 meses</button>
+                <button class="chip is-active" data-range="12" type="button">12 meses</button>
+              </div>
+            </header>
+            <div class="chart-box chart-box--lg">
+              <canvas id="rotativoChart" aria-label="Gráfico de linha mostrando o crescimento da dívida no rotativo" role="img"></canvas>
+            </div>
+            <footer class="panel__footer">
+              <span class="badge badge--danger">Após 12 meses: <strong id="rotativo-final">—</strong></span>
+              <span class="muted">Desde jan/2024, a Lei 14.690/2023 limita os juros e encargos do rotativo a 100% do valor original da dívida.</span>
+            </footer>
+          </article>
+
+          <article class="panel reveal">
+            <header class="panel__header">
+              <div>
+                <h3>Principais fontes de dívida</h3>
+                <p>% das famílias endividadas por tipo de dívida</p>
+              </div>
+            </header>
+            <div class="chart-box chart-box--lg">
+              <canvas id="fontesChart" aria-label="Gráfico de barras com as principais fontes de endividamento no Brasil" role="img"></canvas>
+            </div>
+            <footer class="panel__footer">
+              <span class="muted">Fonte: CNC/Peic, valores aproximados. Uma família pode ter mais de um tipo de dívida.</span>
+            </footer>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================
+         SIMULADOR DE DÍVIDA (efeito bola de neve)
+         ================================================= -->
+    <section id="simulador" class="section">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="eyebrow">Simulador</span>
+          <h2>O efeito <span class="text-gradient">bola de neve</span></h2>
+          <p>Ajuste o valor da dívida e a taxa mensal. O gráfico mostra como os juros compostos fazem a dívida crescer quando nada é pago.</p>
+        </div>
+
+        <div class="simulator reveal">
+          <!-- Controles -->
+          <div class="panel simulator__controls">
+            <div class="control">
+              <div class="control__top">
+                <label for="sim-amount">Valor da dívida</label>
+                <div class="control__input">
+                  <span>R$</span>
+                  <input id="sim-amount" type="number" min="100" max="50000" step="50" value="1000" inputmode="decimal" />
+                </div>
+              </div>
+              <input class="range" id="sim-amount-range" type="range" min="100" max="20000" step="100" value="1000" aria-label="Valor da dívida" />
+              <div class="control__scale"><span>R$ 100</span><span>R$ 20.000</span></div>
+            </div>
+
+            <div class="control">
+              <div class="control__top">
+                <label for="sim-rate">Juros ao mês</label>
+                <div class="control__input">
+                  <input id="sim-rate" type="number" min="0.1" max="25" step="0.1" value="14" inputmode="decimal" />
+                  <span>%</span>
+                </div>
+              </div>
+              <input class="range" id="sim-rate-range" type="range" min="0.5" max="20" step="0.1" value="14" aria-label="Taxa de juros mensal" />
+              <div class="control__scale"><span>0,5%</span><span>20%</span></div>
+            </div>
+
+            <div class="presets" role="group" aria-label="Taxas de referência">
+              <p class="presets__title">Taxas de referência</p>
+              <button class="preset" data-rate="0.6" type="button"><span>Poupança (rende)</span><strong>~0,6%</strong></button>
+              <button class="preset" data-rate="2" type="button"><span>Consignado</span><strong>~2%</strong></button>
+              <button class="preset" data-rate="7" type="button"><span>Cheque especial</span><strong>~7%</strong></button>
+              <button class="preset" data-rate="14" type="button"><span>Rotativo</span><strong>~14%</strong></button>
+            </div>
+          </div>
+
+          <!-- Resultados -->
+          <div class="panel simulator__results">
+            <div class="results-grid" id="sim-results">
+              <div class="result" data-month="1"><span class="result__label">1 mês</span><span class="result__value">—</span><span class="result__delta">—</span></div>
+              <div class="result" data-month="3"><span class="result__label">3 meses</span><span class="result__value">—</span><span class="result__delta">—</span></div>
+              <div class="result" data-month="6"><span class="result__label">6 meses</span><span class="result__value">—</span><span class="result__delta">—</span></div>
+              <div class="result result--highlight" data-month="12"><span class="result__label">12 meses</span><span class="result__value">—</span><span class="result__delta">—</span></div>
+            </div>
+
+            <div class="chart-box chart-box--md">
+              <canvas id="simChart" aria-label="Gráfico do crescimento da dívida simulada mês a mês" role="img"></canvas>
+            </div>
+
+            <p class="sim-insight" id="sim-insight">—</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================
+         3. SEÇÃO EDUCATIVA (abas)
+         ================================================= -->
+    <section id="educacao" class="section">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="eyebrow">Aprenda</span>
+          <h2>Educação financeira, <span class="text-gradient">sem complicação</span></h2>
+          <p>Quatro conceitos essenciais para nunca cair nas armadilhas do crédito.</p>
+        </div>
+
+        <div class="tabs reveal">
+          <div class="tabs__list" role="tablist" aria-label="Tópicos educativos">
+            <button class="tabs__btn is-active" role="tab" aria-selected="true" aria-controls="tab-armadilha" id="tabbtn-armadilha" type="button">
+              <span class="tabs__num">01</span>Crédito fácil
+            </button>
+            <button class="tabs__btn" role="tab" aria-selected="false" aria-controls="tab-ciclo" id="tabbtn-ciclo" type="button" tabindex="-1">
+              <span class="tabs__num">02</span>Ciclo da dívida
+            </button>
+            <button class="tabs__btn" role="tab" aria-selected="false" aria-controls="tab-cartao" id="tabbtn-cartao" type="button" tabindex="-1">
+              <span class="tabs__num">03</span>Uso do cartão
+            </button>
+            <button class="tabs__btn" role="tab" aria-selected="false" aria-controls="tab-comparativo" id="tabbtn-comparativo" type="button" tabindex="-1">
+              <span class="tabs__num">04</span>Saudável x perigoso
+            </button>
+          </div>
+
+          <!-- Aba 1: Crédito fácil -->
+          <div class="tabs__panel is-active" role="tabpanel" id="tab-armadilha" aria-labelledby="tabbtn-armadilha">
+            <div class="split">
+              <div>
+                <h3>O que é crédito fácil?</h3>
+                <p class="lead">É o dinheiro oferecido com <strong>pouca burocracia</strong> e <strong>aprovação imediata</strong>: “dinheiro na conta em 5 minutos”, “sem consulta ao SPC”, “limite pré-aprovado”.</p>
+                <p>Parece uma ajuda, mas a facilidade tem um preço. Quanto mais fácil o acesso, maior costuma ser o risco para quem empresta — e esse risco é cobrado de você em forma de <strong>juros altíssimos</strong>.</p>
+              </div>
+              <div class="trap-list">
+                <h4>Por que é uma armadilha</h4>
+                <div class="trap">
+                  <span class="trap__icon">%</span>
+                  <div><strong>Juros escondidos</strong><p>A parcela “cabe no bolso”, mas o custo total (CET) pode ser o dobro do valor pego.</p></div>
+                </div>
+                <div class="trap">
+                  <span class="trap__icon">⚡</span>
+                  <div><strong>Decisão por impulso</strong><p>A rapidez elimina o tempo de pensar se a compra é mesmo necessária.</p></div>
+                </div>
+                <div class="trap">
+                  <span class="trap__icon">∞</span>
+                  <div><strong>Dívida que alimenta dívida</strong><p>Muitos pegam um novo empréstimo para pagar o anterior.</p></div>
+                </div>
+                <div class="trap">
+                  <span class="trap__icon">!</span>
+                  <div><strong>Golpes</strong><p>Desconfie de quem pede “taxa antecipada” para liberar crédito. Instituição séria não faz isso.</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aba 2: Ciclo do endividamento -->
+          <div class="tabs__panel" role="tabpanel" id="tab-ciclo" aria-labelledby="tabbtn-ciclo" hidden>
+            <h3>O ciclo do endividamento</h3>
+            <p class="lead">Entender o ciclo é o primeiro passo para quebrá-lo. Passe o mouse (ou toque) em cada etapa.</p>
+
+            <div class="cycle">
+              <svg class="cycle__ring" viewBox="0 0 400 400" aria-hidden="true">
+                <defs>
+                  <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                    <path d="M0 0L10 5L0 10z" fill="currentColor" />
+                  </marker>
+                </defs>
+                <circle cx="200" cy="200" r="150" class="cycle__track" />
+                <circle cx="200" cy="200" r="150" class="cycle__dash" />
+              </svg>
+
+              <div class="cycle__center">
+                <span class="cycle__step-num" id="cycle-num">01</span>
+                <strong id="cycle-title">Gasto acima da renda</strong>
+                <p id="cycle-text">Compras por impulso ou emergências sem reserva fazem os gastos ultrapassarem o salário.</p>
+              </div>
+
+              <button class="cycle__node is-active" style="--i:0" data-step="0" type="button"><span>1</span>Gasto</button>
+              <button class="cycle__node" style="--i:1" data-step="1" type="button"><span>2</span>Crédito</button>
+              <button class="cycle__node" style="--i:2" data-step="2" type="button"><span>3</span>Mínimo</button>
+              <button class="cycle__node" style="--i:3" data-step="3" type="button"><span>4</span>Juros</button>
+              <button class="cycle__node" style="--i:4" data-step="4" type="button"><span>5</span>Nova dívida</button>
+            </div>
+
+            <div class="callout">
+              <strong>Como sair do ciclo:</strong> pare de usar o crédito caro, liste todas as dívidas, negocie (programas como o <em>Desenrola</em> e mutirões do Serasa ajudam), troque dívida cara por barata (ex.: consignado no lugar do rotativo) e monte uma reserva de emergência.
+            </div>
+          </div>
+
+          <!-- Aba 3: Uso consciente do cartão -->
+          <div class="tabs__panel" role="tabpanel" id="tab-cartao" aria-labelledby="tabbtn-cartao" hidden>
+            <h3>Uso consciente do cartão de crédito</h3>
+            <p class="lead">O cartão não é vilão — é uma ferramenta. Usado com regra, ele organiza a vida financeira e até gera benefícios.</p>
+            <div class="tips">
+              <article class="tip"><span class="tip__num">01</span><h4>Pague sempre o total</h4><p>Pagar só o mínimo joga o restante no rotativo, a linha de crédito mais cara do país.</p></article>
+              <article class="tip"><span class="tip__num">02</span><h4>Limite não é renda</h4><p>Use no máximo 30% do seu limite e nunca gaste mais do que já ganha no mês.</p></article>
+              <article class="tip"><span class="tip__num">03</span><h4>Cuidado com parcelas</h4><p>Várias parcelas pequenas somadas comprometem os próximos meses. Anote todas.</p></article>
+              <article class="tip"><span class="tip__num">04</span><h4>Escolha a melhor data</h4><p>Compras logo após o fechamento da fatura dão até ~40 dias para pagar sem juros.</p></article>
+              <article class="tip"><span class="tip__num">05</span><h4>Acompanhe pelo app</h4><p>Ative notificações de cada compra para ter controle em tempo real e evitar fraudes.</p></article>
+              <article class="tip"><span class="tip__num">06</span><h4>Evite saque no crédito</h4><p>Saque no cartão cobra tarifa e juros desde o primeiro dia. É uma das piores opções.</p></article>
+            </div>
+          </div>
+
+          <!-- Aba 4: Comparativo -->
+          <div class="tabs__panel" role="tabpanel" id="tab-comparativo" aria-labelledby="tabbtn-comparativo" hidden>
+            <h3>Crédito saudável x crédito perigoso</h3>
+            <p class="lead">Nem toda dívida é ruim. A diferença está no motivo, no custo e no planejamento.</p>
+            <div class="compare">
+              <div class="compare__col compare__col--good">
+                <header><span class="compare__badge">✓</span><h4>Crédito saudável</h4></header>
+                <ul>
+                  <li>Planejado e com objetivo claro (estudo, casa, ferramenta de trabalho)</li>
+                  <li>Parcela de até 30% da renda mensal</li>
+                  <li>Juros baixos e CET comparado entre bancos</li>
+                  <li>Ajuda a gerar valor ou renda no futuro</li>
+                  <li>Você sabe exatamente quando termina</li>
+                </ul>
+              </div>
+              <div class="compare__vs" aria-hidden="true">VS</div>
+              <div class="compare__col compare__col--bad">
+                <header><span class="compare__badge">✕</span><h4>Crédito perigoso</h4></header>
+                <ul>
+                  <li>Usado por impulso ou para cobrir outra dívida</li>
+                  <li>Parcelas que somam mais da metade da renda</li>
+                  <li>Rotativo, cheque especial e empréstimos “sem consulta”</li>
+                  <li>Financia consumo que acaba antes da dívida</li>
+                  <li>Valor final desconhecido ou que só aumenta</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Barras comparando taxas -->
+            <div class="rate-bars">
+              <h4>Quanto custa ao ano? <span class="muted">(taxas médias aproximadas)</span></h4>
+              <div class="rate-bar" data-value="17"><span class="rate-bar__label">Financ. imóvel</span><div class="rate-bar__track"><span class="rate-bar__fill rate-bar__fill--good"></span></div><span class="rate-bar__value">~12%</span></div>
+              <div class="rate-bar" data-value="24"><span class="rate-bar__label">Consignado</span><div class="rate-bar__track"><span class="rate-bar__fill rate-bar__fill--good"></span></div><span class="rate-bar__value">~25%</span></div>
+              <div class="rate-bar" data-value="46"><span class="rate-bar__label">Crédito pessoal</span><div class="rate-bar__track"><span class="rate-bar__fill rate-bar__fill--warn"></span></div><span class="rate-bar__value">~90%</span></div>
+              <div class="rate-bar" data-value="55"><span class="rate-bar__label">Cheque especial</span><div class="rate-bar__track"><span class="rate-bar__fill rate-bar__fill--bad"></span></div><span class="rate-bar__value">~130%</span></div>
+              <div class="rate-bar" data-value="100"><span class="rate-bar__label">Rotativo</span><div class="rate-bar__track"><span class="rate-bar__fill rate-bar__fill--bad"></span></div><span class="rate-bar__value">~430%</span></div>
+              <p class="muted small">Barras em escala de raiz quadrada para caber na tela — a diferença real é ainda maior.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================
+         4. QUIZ
+         ================================================= -->
+    <section id="quiz" class="section">
+      <div class="container container--narrow">
+        <div class="section__head reveal">
+          <span class="eyebrow">Quiz</span>
+          <h2>Teste seus <span class="text-gradient">conhecimentos</span></h2>
+          <p>5 perguntas rápidas. Veja se você está pronto para usar o crédito com inteligência.</p>
+        </div>
+
+        <div class="panel quiz reveal" id="quiz-card">
+          <!-- Tela inicial do quiz -->
+          <div class="quiz__screen" id="quiz-start">
+            <div class="quiz__intro-icon">?</div>
+            <h3>Pronto para o desafio?</h3>
+            <p class="muted">Cada resposta certa vale 20 pontos. Você verá a explicação após cada pergunta.</p>
+            <button class="btn btn--primary" id="quiz-start-btn" type="button">Começar quiz</button>
+            <p class="muted small" id="quiz-best"></p>
+          </div>
+
+          <!-- Pergunta -->
+          <div class="quiz__screen" id="quiz-question" hidden>
+            <div class="quiz__top">
+              <span class="quiz__count" id="quiz-count">Pergunta 1 de 5</span>
+              <span class="quiz__score">Pontos: <strong id="quiz-score">0</strong></span>
+            </div>
+            <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="quiz-progress">
+              <span class="progress__fill" id="quiz-progress-fill"></span>
+            </div>
+            <h3 class="quiz__q" id="quiz-q">—</h3>
+            <div class="quiz__options" id="quiz-options"></div>
+            <div class="quiz__feedback" id="quiz-feedback" hidden></div>
+            <div class="quiz__actions">
+              <button class="btn btn--primary" id="quiz-next" type="button" disabled>Próxima</button>
+            </div>
+          </div>
+
+          <!-- Resultado -->
+          <div class="quiz__screen" id="quiz-result" hidden>
+            <div class="score-ring">
+              <svg viewBox="0 0 120 120" aria-hidden="true">
+                <circle cx="60" cy="60" r="52" class="score-ring__track" />
+                <circle cx="60" cy="60" r="52" class="score-ring__fill" id="score-ring-fill" />
+              </svg>
+              <div class="score-ring__value"><span id="result-score">0</span><small>/100</small></div>
+            </div>
+            <h3 id="result-title">—</h3>
+            <p class="muted" id="result-text">—</p>
+            <div class="result-review" id="result-review"></div>
+            <button class="btn btn--primary" id="quiz-restart" type="button">Refazer quiz</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+      <div class="container footer__inner">
+        <a class="logo" href="#dashboard">
+          <span class="logo__mark">V</span>
+          <span class="logo__text">verde<span class="logo__dot">.</span></span>
+        </a>
+        <p>Projeto de educação financeira · Colégio IP Arujá · 2026</p>
+        <p class="muted small">Dados aproximados com base em CNC (Peic), Serasa e Banco Central. Conteúdo educativo, não é recomendação financeira.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Notificação flutuante -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
