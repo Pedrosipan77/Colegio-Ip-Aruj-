@@ -5,7 +5,7 @@
    Sumário
    1.  Utilitários (seletores, formatação, toast)
    2.  Armazenamento (usuários e sessão no localStorage)
-   3.  Autenticação (login, cadastro, validação)
+   3.  Autenticação (login, cadastro, validação) e landing page
    4.  Inicialização do app após login
    5.  Navegação (menu, seção ativa, progresso de rolagem)
    6.  Animações (revelar ao rolar, contadores)
@@ -368,7 +368,35 @@ function logout() {
   window.scrollTo({ top: 0 });
   history.replaceState(null, "", location.pathname);
   switchAuthTab("login");
+  initReveal();
   showToast("Você saiu da sua conta. Até logo!");
+}
+
+/* ---------- 3b. LANDING PAGE ---------- */
+function initLanding() {
+  // Botões "Criar minha conta" / "Já tenho conta": sobem até o formulário
+  $$("[data-goto-auth]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      $("#auth-card").scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "center" });
+      switchAuthTab(btn.dataset.gotoAuth);
+    });
+  });
+
+  // Imagens da vitrine: clique para ampliar
+  const box = $("#lightbox");
+  const img = $("#lightbox-img");
+  const close = () => box.open && box.close();
+  $$("[data-zoom]").forEach((frame) => {
+    frame.addEventListener("click", () => {
+      const thumb = $("img", frame);
+      img.src = frame.dataset.zoom;
+      img.alt = thumb.alt;
+      if (typeof box.showModal === "function") box.showModal();
+      else window.open(frame.dataset.zoom, "_blank");
+    });
+  });
+  $("#lightbox-close").addEventListener("click", close);
+  box.addEventListener("click", (e) => e.target === box && close());
 }
 
 /* ---------- 4. INICIALIZAÇÃO DO APP ---------- */
@@ -477,6 +505,8 @@ function initReveal() {
     { threshold: 0.12 }
   );
   $$(".reveal").forEach((el) => {
+    // Elementos de telas ocultas são tratados quando a tela aparecer
+    if (el.offsetParent === null && getComputedStyle(el).position !== "fixed") return;
     // Na reentrada, os cards voltam a animar
     if (el.classList.contains("stat-card")) el.classList.remove("is-visible");
     if (el.classList.contains("is-visible")) return;
@@ -1455,6 +1485,7 @@ function updateBestScoreLabel() {
 document.addEventListener("DOMContentLoaded", () => {
   migrateLegacyAccounts();
   initAuth();
+  initLanding();
 
   // Se já houver sessão salva, entra direto no dashboard
   const session = Store.get(STORAGE_SESSION, null);
@@ -1464,5 +1495,6 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     Store.remove(STORAGE_SESSION);
     $("#auth-view").hidden = false;
+    initReveal();
   }
 });

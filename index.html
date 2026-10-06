@@ -26,129 +26,403 @@
   </div>
 
   <!-- =====================================================
-       1. TELA DE LOGIN / CADASTRO
+       1. LANDING PAGE COM LOGIN / CADASTRO
        ===================================================== -->
-  <main id="auth-view" class="auth" aria-labelledby="auth-title">
-    <section class="auth__brand">
-      <img class="auth__logo" src="assets/logo-creditto.png" alt="Créditto · Educação Financeira" width="720" height="509" />
+  <main id="auth-view" class="landing">
+    <div class="auth" id="entrar">
+      <section class="auth__brand">
+        <img class="auth__logo" src="assets/logo-creditto.png" alt="Créditto · Educação Financeira" width="720" height="509" />
 
-      <div class="auth__pitch">
-        <span class="pill"><span class="pill__dot"></span>Educação financeira</span>
-        <h1 class="auth__headline">Entenda o crédito <span class="text-gradient">antes</span> que ele entenda você.</h1>
-        <p class="auth__sub">Simule juros, visualize o efeito bola de neve e aprenda a usar o cartão de crédito a seu favor.</p>
+        <div class="auth__pitch">
+          <span class="pill"><span class="pill__dot"></span>Educação financeira</span>
+          <h1 class="auth__headline">Entenda o crédito <span class="text-gradient">antes</span> que ele entenda você.</h1>
+          <p class="auth__sub">Simule juros, visualize o efeito bola de neve e aprenda a usar o cartão de crédito a seu favor.</p>
 
-        <!-- Cartão de crédito decorativo -->
-        <div class="credit-card" aria-hidden="true">
-          <div class="credit-card__top">
-            <span class="credit-card__chip"></span>
-            <svg class="credit-card__wave" viewBox="0 0 24 24"><path d="M8.5 7.5a6 6 0 0 1 0 9M12 5a9.5 9.5 0 0 1 0 14M5 10a2.5 2.5 0 0 1 0 4" /></svg>
+          <!-- Resumo do que tem dentro -->
+          <ul class="facts">
+            <li><strong>4</strong><span>partes</span></li>
+            <li><strong>8</strong><span>ferramentas interativas</span></li>
+            <li><strong>10</strong><span>perguntas no quiz</span></li>
+          </ul>
+        </div>
+
+        <a class="scroll-cue" href="#o-que-tem">
+          <span class="scroll-cue__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>
+          Veja o que tem dentro
+        </a>
+      </section>
+
+      <section class="auth__panel">
+        <div class="auth-card" id="auth-card">
+          <div class="auth-card__header">
+            <h2 id="auth-title">Bem-vindo de volta</h2>
+            <p id="auth-subtitle">Entre para acessar seu painel financeiro.</p>
           </div>
-          <div class="credit-card__number">•••• •••• •••• 2026</div>
-          <div class="credit-card__bottom">
-            <div>
-              <small>Titular</small>
-              <span>Consumidor Consciente</span>
+
+          <!-- Alternador Entrar / Criar conta -->
+          <div class="segmented" role="tablist" aria-label="Escolha entre entrar ou criar conta">
+            <button class="segmented__btn is-active" role="tab" aria-selected="true" data-auth-tab="login" type="button">Entrar</button>
+            <button class="segmented__btn" role="tab" aria-selected="false" data-auth-tab="register" type="button">Criar conta</button>
+            <span class="segmented__thumb" aria-hidden="true"></span>
+          </div>
+
+          <!-- Mensagem geral do formulário -->
+          <div class="form-alert" id="form-alert" role="alert" hidden></div>
+
+          <!-- Formulário de LOGIN -->
+          <form id="login-form" class="form" novalidate>
+            <div class="field">
+              <label for="login-email">E-mail</label>
+              <div class="field__control">
+                <svg class="field__icon" viewBox="0 0 24 24"><path d="M4 6h16v12H4z M4 7l8 6 8-6"/></svg>
+                <input id="login-email" name="email" type="email" placeholder="voce@email.com" autocomplete="email" />
+              </div>
+              <small class="field__error" data-error-for="login-email"></small>
             </div>
-            <div class="credit-card__brand"><span></span><span></span></div>
+
+            <div class="field">
+              <label for="login-password">Senha</label>
+              <div class="field__control">
+                <svg class="field__icon" viewBox="0 0 24 24"><path d="M6 11h12v9H6z M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg>
+                <input id="login-password" name="password" type="password" placeholder="Sua senha" autocomplete="current-password" />
+                <button class="field__toggle" type="button" data-toggle-password="login-password" aria-label="Mostrar senha">
+                  <svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+              <small class="field__error" data-error-for="login-password"></small>
+            </div>
+
+            <button class="btn btn--primary btn--block" type="submit">
+              <span class="btn__label">Entrar</span>
+              <span class="btn__spinner" aria-hidden="true"></span>
+            </button>
+          </form>
+
+          <!-- Formulário de CADASTRO -->
+          <form id="register-form" class="form" novalidate hidden>
+            <div class="field">
+              <label for="reg-name">Nome completo</label>
+              <div class="field__control">
+                <svg class="field__icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
+                <input id="reg-name" name="name" type="text" placeholder="Seu nome" autocomplete="name" />
+              </div>
+              <small class="field__error" data-error-for="reg-name"></small>
+            </div>
+
+            <div class="field">
+              <label for="reg-email">E-mail</label>
+              <div class="field__control">
+                <svg class="field__icon" viewBox="0 0 24 24"><path d="M4 6h16v12H4z M4 7l8 6 8-6"/></svg>
+                <input id="reg-email" name="email" type="email" placeholder="voce@email.com" autocomplete="email" />
+              </div>
+              <small class="field__error" data-error-for="reg-email"></small>
+            </div>
+
+            <div class="field">
+              <label for="reg-password">Senha</label>
+              <div class="field__control">
+                <svg class="field__icon" viewBox="0 0 24 24"><path d="M6 11h12v9H6z M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg>
+                <input id="reg-password" name="password" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password" />
+                <button class="field__toggle" type="button" data-toggle-password="reg-password" aria-label="Mostrar senha">
+                  <svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+              <!-- Medidor de força da senha -->
+              <div class="strength" aria-hidden="true">
+                <span></span><span></span><span></span><span></span>
+              </div>
+              <small class="field__hint" id="strength-label">Use letras, números e símbolos.</small>
+              <small class="field__error" data-error-for="reg-password"></small>
+            </div>
+
+            <button class="btn btn--primary btn--block" type="submit">
+              <span class="btn__label">Criar minha conta</span>
+              <span class="btn__spinner" aria-hidden="true"></span>
+            </button>
+          </form>
+
+          <p class="auth-card__legal">Os dados ficam salvos apenas no seu navegador (localStorage).</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- =================================================
+         LANDING: o que tem dentro
+         ================================================= -->
+    <section class="section landing-section" id="o-que-tem">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="eyebrow">O que tem dentro</span>
+          <h2>Tudo para entender o crédito <span class="text-gradient">de verdade</span></h2>
+          <p>O Créditto é dividido em quatro partes. Cada uma tem explicações curtas e ferramentas para testar com os seus próprios números.</p>
+        </div>
+
+        <div class="parts">
+          <article class="part reveal">
+            <span class="part__icon"><svg viewBox="0 0 24 24"><path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z"/></svg></span>
+            <span class="part__num">Parte 1</span>
+            <h3>Crédito fácil</h3>
+            <p>Por que o dinheiro “aprovado na hora” sai tão caro.</p>
+            <ul>
+              <li>6 tipos de crédito fácil com taxa e risco</li>
+              <li>Calculadora de juros escondidos</li>
+              <li>Crédito saudável x perigoso</li>
+            </ul>
+          </article>
+          <article class="part reveal">
+            <span class="part__icon"><svg viewBox="0 0 24 24"><path d="M4 18l6-6 4 4 6-8M14 8h6v6"/></svg></span>
+            <span class="part__num">Parte 2</span>
+            <h3>Endividamento</h3>
+            <p>Como a dívida vira bola de neve e como sair dela.</p>
+            <ul>
+              <li>Ciclo do endividamento interativo</li>
+              <li>Simulador bola de neve e termômetro</li>
+              <li>Passo a passo e seus direitos</li>
+            </ul>
+          </article>
+          <article class="part reveal">
+            <span class="part__icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h3"/></svg></span>
+            <span class="part__num">Parte 3</span>
+            <h3>Cartão de crédito</h3>
+            <p>Use o cartão como ferramenta, não como renda extra.</p>
+            <ul>
+              <li>Fatura explicada parte por parte</li>
+              <li>Mínimo x total e melhor dia de compra</li>
+              <li>Mito ou verdade</li>
+            </ul>
+          </article>
+          <article class="part reveal">
+            <span class="part__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7M12 17h.01"/></svg></span>
+            <span class="part__num">Parte 4</span>
+            <h3>Quiz</h3>
+            <p>Teste o que aprendeu e veja sua pontuação.</p>
+            <ul>
+              <li>5 perguntas sorteadas entre 10</li>
+              <li>Explicação a cada resposta</li>
+              <li>Melhor pontuação salva</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================
+         LANDING: veja por dentro (imagens reais)
+         ================================================= -->
+    <section class="section landing-section" id="por-dentro">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="eyebrow">Veja por dentro</span>
+          <h2>Ferramentas que mostram <span class="text-gradient">o tamanho dos juros</span></h2>
+          <p>Imagens reais do site. Clique em uma imagem para ver maior.</p>
+        </div>
+
+        <div class="showcase">
+          <article class="show reveal">
+            <div class="show__text">
+              <span class="show__tag">Painel</span>
+              <h3>Os números do endividamento no Brasil</h3>
+              <p>Gráficos interativos mostram quanto uma dívida de R$ 1.000 cresce no rotativo e quais são as principais fontes de dívida das famílias.</p>
+              <ul class="show__chips"><li>Gráfico dos juros</li><li>Fontes de dívida</li><li>Estatísticas animadas</li></ul>
+            </div>
+            <button class="frame" type="button" data-zoom="assets/preview/painel.webp" aria-label="Ampliar imagem do painel">
+              <span class="frame__bar"><i></i><i></i><i></i><span>Painel</span></span>
+              <img src="assets/preview/painel.webp" alt="Painel com gráfico de linha dos juros do rotativo e gráfico de barras das fontes de dívida" width="1400" height="751" loading="lazy" />
+            </button>
+          </article>
+
+          <article class="show show--flip reveal">
+            <div class="show__text">
+              <span class="show__tag">Parte 1 · Crédito fácil</span>
+              <h3>Descubra os juros escondidos</h3>
+              <p>Digite o valor, a parcela e o número de parcelas de qualquer oferta. A calculadora mostra quanto você paga só de juros, a taxa ao mês e a taxa ao ano.</p>
+              <ul class="show__chips"><li>“12x de R$ 150” = R$ 800 de juros</li><li>Taxa ao mês e ao ano</li></ul>
+            </div>
+            <button class="frame" type="button" data-zoom="assets/preview/custo.webp" aria-label="Ampliar imagem da calculadora de custo real">
+              <span class="frame__bar"><i></i><i></i><i></i><span>Quanto custa de verdade?</span></span>
+              <img src="assets/preview/custo.webp" alt="Calculadora comparando o anúncio de um empréstimo com o total pago e os juros" width="1400" height="667" loading="lazy" />
+            </button>
+          </article>
+
+          <article class="show reveal">
+            <div class="show__text">
+              <span class="show__tag">Parte 2 · Endividamento</span>
+              <h3>Veja a bola de neve crescer</h3>
+              <p>Escolha o valor da dívida e os juros ao mês. O gráfico mostra quanto ela cresce em 1, 3, 6 e 12 meses quando nada é pago.</p>
+              <ul class="show__chips"><li>Atualiza em tempo real</li><li>Taxas de referência</li></ul>
+            </div>
+            <button class="frame" type="button" data-zoom="assets/preview/simulador.webp" aria-label="Ampliar imagem do simulador bola de neve">
+              <span class="frame__bar"><i></i><i></i><i></i><span>Simulador bola de neve</span></span>
+              <img src="assets/preview/simulador.webp" alt="Simulador com controles de valor e juros e gráfico de barras do crescimento da dívida" width="1400" height="661" loading="lazy" />
+            </button>
+          </article>
+
+          <article class="show show--flip reveal">
+            <div class="show__text">
+              <span class="show__tag">Parte 2 · Endividamento</span>
+              <h3>Descubra se a dívida está saudável</h3>
+              <p>O termômetro calcula quanto da renda já vai para parcelas. A lista de sinais de alerta mostra quando é hora de agir.</p>
+              <ul class="show__chips"><li>Saudável, atenção ou risco</li><li>8 sinais de alerta</li></ul>
+            </div>
+            <button class="frame" type="button" data-zoom="assets/preview/termometro.webp" aria-label="Ampliar imagem do termômetro do endividamento">
+              <span class="frame__bar"><i></i><i></i><i></i><span>Termômetro e sinais de alerta</span></span>
+              <img src="assets/preview/termometro.webp" alt="Termômetro do endividamento marcando 37% e lista de sinais de alerta" width="1400" height="769" loading="lazy" />
+            </button>
+          </article>
+
+          <article class="show reveal">
+            <div class="show__text">
+              <span class="show__tag">Parte 3 · Cartão de crédito</span>
+              <h3>Aprenda a ler a fatura</h3>
+              <p>Uma fatura de exemplo com 7 pontos explicados: total, mínimo, vencimento, fechamento, parcelas futuras, limite e juros.</p>
+              <ul class="show__chips"><li>Toque e entenda</li><li>Dicas em cada parte</li></ul>
+            </div>
+            <button class="frame" type="button" data-zoom="assets/preview/fatura.webp" aria-label="Ampliar imagem da fatura explicada">
+              <span class="frame__bar"><i></i><i></i><i></i><span>Fatura explicada</span></span>
+              <img src="assets/preview/fatura.webp" alt="Fatura de cartão de exemplo com pontos numerados e explicação do pagamento mínimo" width="1400" height="963" loading="lazy" />
+            </button>
+          </article>
+
+          <article class="show show--flip reveal">
+            <div class="show__text">
+              <span class="show__tag">Parte 3 · Cartão de crédito</span>
+              <h3>Pagar o mínimo ou o total?</h3>
+              <p>Compare quanto tempo e quanto dinheiro você gasta pagando só o mínimo da fatura, já com o teto de juros da lei de 2023.</p>
+              <ul class="show__chips"><li>R$ 2.000 viram R$ 4.000</li><li>Teto da Lei 14.690</li></ul>
+            </div>
+            <button class="frame" type="button" data-zoom="assets/preview/minimo.webp" aria-label="Ampliar imagem da comparação mínimo ou total">
+              <span class="frame__bar"><i></i><i></i><i></i><span>Mínimo ou total</span></span>
+              <img src="assets/preview/minimo.webp" alt="Comparação entre pagar a fatura inteira e pagar só o mínimo, com gráfico do saldo devedor" width="1400" height="914" loading="lazy" />
+            </button>
+          </article>
+
+          <article class="show reveal">
+            <div class="show__text">
+              <span class="show__tag">Parte 4 · Quiz</span>
+              <h3>Teste o que aprendeu</h3>
+              <p>Perguntas sobre crédito, dívidas e cartão, com barra de progresso, explicação a cada resposta e uma mensagem final de acordo com a sua pontuação.</p>
+              <ul class="show__chips"><li>Muda a cada rodada</li><li>Pontuação de 0 a 100</li></ul>
+            </div>
+            <button class="frame frame--narrow" type="button" data-zoom="assets/preview/quiz.webp" aria-label="Ampliar imagem do quiz">
+              <span class="frame__bar"><i></i><i></i><i></i><span>Quiz</span></span>
+              <img src="assets/preview/quiz.webp" alt="Pergunta do quiz com a resposta certa destacada e a explicação" width="1400" height="1253" loading="lazy" />
+            </button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================
+         LANDING: por que importa
+         ================================================= -->
+    <section class="section landing-section" id="por-que">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="eyebrow">Por que aprender isso</span>
+          <h2>O crédito mal usado é <span class="text-gradient">o problema de milhões</span></h2>
+        </div>
+        <div class="why">
+          <div class="why__item reveal"><strong>78%</strong><span>das famílias brasileiras têm algum tipo de dívida</span></div>
+          <div class="why__item reveal"><strong>85%</strong><span>dessas famílias devem no cartão de crédito</span></div>
+          <div class="why__item reveal"><strong>72 mi</strong><span>de brasileiros estão com contas em atraso</span></div>
+          <div class="why__item why__item--danger reveal"><strong>430%</strong><span>ao ano era a taxa média do rotativo do cartão antes do teto de 2024</span></div>
+        </div>
+        <p class="muted small why__source">Dados aproximados com base em CNC (Peic), Serasa e Banco Central.</p>
+      </div>
+    </section>
+
+    <!-- =================================================
+         LANDING: como funciona + perguntas
+         ================================================= -->
+    <section class="section landing-section" id="como-funciona">
+      <div class="container">
+        <div class="how-faq">
+          <div class="reveal">
+            <span class="eyebrow">Como funciona</span>
+            <h2 class="how-faq__title">Três passos, sem complicação</h2>
+            <ol class="how">
+              <li><span>1</span><div><h4>Crie sua conta</h4><p>Só nome, e-mail e senha. Leva menos de um minuto.</p></div></li>
+              <li><span>2</span><div><h4>Explore as quatro partes</h4><p>Leia no seu ritmo e mexa nas ferramentas com os seus números.</p></div></li>
+              <li><span>3</span><div><h4>Faça o quiz</h4><p>Veja quanto aprendeu e tente bater sua melhor pontuação.</p></div></li>
+            </ol>
+          </div>
+
+          <div class="reveal">
+            <span class="eyebrow">Perguntas frequentes</span>
+            <h2 class="how-faq__title">Antes de entrar</h2>
+            <div class="faq">
+              <details>
+                <summary>É de graça?</summary>
+                <p>Sim. O Créditto é um projeto escolar de educação financeira, sem anúncios e sem nenhuma cobrança.</p>
+              </details>
+              <details>
+                <summary>Meus dados ficam seguros?</summary>
+                <p>Seus dados ficam salvos só no seu navegador. Nada é enviado para servidores, e a senha é guardada em forma de código (hash).</p>
+              </details>
+              <details>
+                <summary>Funciona no celular?</summary>
+                <p>Sim. O site se adapta a celular, tablet e computador.</p>
+              </details>
+              <details>
+                <summary>De onde vêm os números?</summary>
+                <p>As estatísticas são aproximadas e vêm da CNC (pesquisa Peic), do Serasa e do Banco Central. Os simuladores usam as fórmulas de juros compostos.</p>
+              </details>
+              <details>
+                <summary>Isso é recomendação financeira?</summary>
+                <p>Não. O conteúdo é educativo. Para decisões importantes, compare ofertas e procure a sua instituição financeira ou o Procon.</p>
+              </details>
+            </div>
           </div>
         </div>
       </div>
-
-      <p class="auth__foot">Projeto escolar · Colégio IP Arujá</p>
     </section>
 
-    <section class="auth__panel">
-      <div class="auth-card" id="auth-card">
-        <div class="auth-card__header">
-          <h2 id="auth-title">Bem-vindo de volta</h2>
-          <p id="auth-subtitle">Entre para acessar seu painel financeiro.</p>
+    <!-- =================================================
+         LANDING: chamada final
+         ================================================= -->
+    <section class="section landing-section" id="comecar">
+      <div class="container">
+        <div class="cta reveal">
+          <div class="cta__text">
+            <h2>Pronto para entender o crédito <span class="text-gradient">antes</span> que ele entenda você?</h2>
+            <p>Crie sua conta grátis e comece pela parte que mais te interessa.</p>
+            <div class="cta__actions">
+              <button class="btn btn--primary" type="button" data-goto-auth="register">Criar minha conta</button>
+              <button class="btn btn--outline" type="button" data-goto-auth="login">Já tenho conta</button>
+            </div>
+          </div>
+          <!-- Cartão de crédito decorativo -->
+          <div class="credit-card" aria-hidden="true">
+            <div class="credit-card__top">
+              <span class="credit-card__chip"></span>
+              <svg class="credit-card__wave" viewBox="0 0 24 24"><path d="M8.5 7.5a6 6 0 0 1 0 9M12 5a9.5 9.5 0 0 1 0 14M5 10a2.5 2.5 0 0 1 0 4" /></svg>
+            </div>
+            <div class="credit-card__number">•••• •••• •••• 2026</div>
+            <div class="credit-card__bottom">
+              <div>
+                <small>Titular</small>
+                <span>Consumidor Consciente</span>
+              </div>
+              <div class="credit-card__brand"><span></span><span></span></div>
+            </div>
+          </div>
         </div>
-
-        <!-- Alternador Entrar / Criar conta -->
-        <div class="segmented" role="tablist" aria-label="Escolha entre entrar ou criar conta">
-          <button class="segmented__btn is-active" role="tab" aria-selected="true" data-auth-tab="login" type="button">Entrar</button>
-          <button class="segmented__btn" role="tab" aria-selected="false" data-auth-tab="register" type="button">Criar conta</button>
-          <span class="segmented__thumb" aria-hidden="true"></span>
-        </div>
-
-        <!-- Mensagem geral do formulário -->
-        <div class="form-alert" id="form-alert" role="alert" hidden></div>
-
-        <!-- Formulário de LOGIN -->
-        <form id="login-form" class="form" novalidate>
-          <div class="field">
-            <label for="login-email">E-mail</label>
-            <div class="field__control">
-              <svg class="field__icon" viewBox="0 0 24 24"><path d="M4 6h16v12H4z M4 7l8 6 8-6"/></svg>
-              <input id="login-email" name="email" type="email" placeholder="voce@email.com" autocomplete="email" />
-            </div>
-            <small class="field__error" data-error-for="login-email"></small>
-          </div>
-
-          <div class="field">
-            <label for="login-password">Senha</label>
-            <div class="field__control">
-              <svg class="field__icon" viewBox="0 0 24 24"><path d="M6 11h12v9H6z M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg>
-              <input id="login-password" name="password" type="password" placeholder="Sua senha" autocomplete="current-password" />
-              <button class="field__toggle" type="button" data-toggle-password="login-password" aria-label="Mostrar senha">
-                <svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
-              </button>
-            </div>
-            <small class="field__error" data-error-for="login-password"></small>
-          </div>
-
-          <button class="btn btn--primary btn--block" type="submit">
-            <span class="btn__label">Entrar</span>
-            <span class="btn__spinner" aria-hidden="true"></span>
-          </button>
-        </form>
-
-        <!-- Formulário de CADASTRO -->
-        <form id="register-form" class="form" novalidate hidden>
-          <div class="field">
-            <label for="reg-name">Nome completo</label>
-            <div class="field__control">
-              <svg class="field__icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
-              <input id="reg-name" name="name" type="text" placeholder="Seu nome" autocomplete="name" />
-            </div>
-            <small class="field__error" data-error-for="reg-name"></small>
-          </div>
-
-          <div class="field">
-            <label for="reg-email">E-mail</label>
-            <div class="field__control">
-              <svg class="field__icon" viewBox="0 0 24 24"><path d="M4 6h16v12H4z M4 7l8 6 8-6"/></svg>
-              <input id="reg-email" name="email" type="email" placeholder="voce@email.com" autocomplete="email" />
-            </div>
-            <small class="field__error" data-error-for="reg-email"></small>
-          </div>
-
-          <div class="field">
-            <label for="reg-password">Senha</label>
-            <div class="field__control">
-              <svg class="field__icon" viewBox="0 0 24 24"><path d="M6 11h12v9H6z M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg>
-              <input id="reg-password" name="password" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password" />
-              <button class="field__toggle" type="button" data-toggle-password="reg-password" aria-label="Mostrar senha">
-                <svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
-              </button>
-            </div>
-            <!-- Medidor de força da senha -->
-            <div class="strength" aria-hidden="true">
-              <span></span><span></span><span></span><span></span>
-            </div>
-            <small class="field__hint" id="strength-label">Use letras, números e símbolos.</small>
-            <small class="field__error" data-error-for="reg-password"></small>
-          </div>
-
-          <button class="btn btn--primary btn--block" type="submit">
-            <span class="btn__label">Criar minha conta</span>
-            <span class="btn__spinner" aria-hidden="true"></span>
-          </button>
-        </form>
-
-        <p class="auth-card__legal">Os dados ficam salvos apenas no seu navegador (localStorage).</p>
       </div>
     </section>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <img class="footer__logo" src="assets/logo-creditto.png" alt="Créditto · Educação Financeira" width="720" height="509" loading="lazy" />
+        <p>Projeto de educação financeira · Colégio IP Arujá · 2026</p>
+        <p class="muted small">Conteúdo educativo, não é recomendação financeira.</p>
+      </div>
+    </footer>
+
+    <!-- Imagem ampliada -->
+    <dialog class="lightbox" id="lightbox" aria-label="Imagem ampliada">
+      <button class="lightbox__close" type="button" id="lightbox-close" aria-label="Fechar imagem">✕</button>
+      <img id="lightbox-img" src="" alt="" />
+    </dialog>
   </main>
 
   <!-- =====================================================
